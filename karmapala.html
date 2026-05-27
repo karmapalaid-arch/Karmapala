@@ -1,0 +1,3187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<!-- ═══ GOOGLE ANALYTICS 4 ═══
+     Ganti G-XXXXXXXXXX dengan Measurement ID kamu.
+     Cara dapat ID: analytics.google.com → Admin → Data Streams → Web → Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX', {
+    send_page_view: true,
+    anonymize_ip: true
+  });
+
+  // ── Event tracking kustom Karmapala ──────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // 1. Klik tombol Daftar / CTA
+    document.querySelectorAll('a[href*="forms.gle"], .btn-p').forEach(function(el) {
+      el.addEventListener('click', function() {
+        gtag('event', 'klik_daftar', {
+          event_category: 'CTA',
+          event_label: el.textContent.trim().substring(0, 50)
+        });
+      });
+    });
+
+    // 2. Klik WhatsApp
+    document.querySelectorAll('a[href*="wa.me"]').forEach(function(el) {
+      el.addEventListener('click', function() {
+        gtag('event', 'klik_whatsapp', {
+          event_category: 'Kontak',
+          event_label: 'WhatsApp'
+        });
+      });
+    });
+
+    // 3. Klik Instagram
+    document.querySelectorAll('a[href*="instagram.com"]').forEach(function(el) {
+      el.addEventListener('click', function() {
+        gtag('event', 'klik_instagram', {
+          event_category: 'Kontak',
+          event_label: 'Instagram'
+        });
+      });
+    });
+
+    // 4. Buka lightbox galeri
+    var origOpenLB = window.openLB;
+    if (typeof origOpenLB === 'function') {
+      window.openLB = function(section, idx) {
+        gtag('event', 'lihat_galeri', {
+          event_category: 'Galeri',
+          event_label: section + ':' + idx
+        });
+        origOpenLB(section, idx);
+      };
+    }
+
+    // 5. Scroll depth — catat saat pengunjung mencapai section penting
+    var sections = ['tentang','kegiatan','galeri','pendaftaran','kontak'];
+    var tracked  = {};
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var id = entry.target.id;
+        if (entry.isIntersecting && !tracked[id]) {
+          tracked[id] = true;
+          gtag('event', 'scroll_section', {
+            event_category: 'Engagement',
+            event_label: id
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+  });
+</script>
+
+<meta name="theme-color" content="#080808">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>KARMAPALA – Pencinta Alam dan Penempuh Rimba</title>
+<meta name="description" content="Karmapala adalah organisasi pencinta alam aktif sejak 2017. Bergabunglah bersama 120+ anggota dalam ekspedisi pendakian, arung jeram, konservasi alam, dan petualangan luar biasa lainnya.">
+<meta name="keywords" content="karmapala, pencinta alam, pendakian, arung jeram, konservasi, panjat tebing, organisasi alam, petualangan">
+<meta name="author" content="Karmapala">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://karmapala.id/">
+
+<!-- ═══ OPEN GRAPH — Facebook, WhatsApp, Telegram, LINE ═══ -->
+<meta property="og:type"        content="website">
+<meta property="og:site_name"   content="Karmapala">
+<meta property="og:url"         content="https://karmapala.id/">
+<meta property="og:title"       content="KARMAPALA – Pencinta Alam dan Penempuh Rimba">
+<meta property="og:description" content="Organisasi pencinta alam aktif sejak 2017. Bergabunglah bersama 120+ anggota dalam ekspedisi pendakian, arung jeram, konservasi alam, dan petualangan luar biasa.">
+<meta property="og:image"       content="https://karmapala.id/og-image.jpg">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt"   content="Karmapala – Pencinta Alam dan Penempuh Rimba">
+<meta property="og:locale"      content="id_ID">
+
+<!-- ═══ TWITTER / X CARD ═══ -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:site"        content="@karmapala">
+<meta name="twitter:title"       content="KARMAPALA – Pencinta Alam dan Penempuh Rimba">
+<meta name="twitter:description" content="Organisasi pencinta alam aktif sejak 2017. Bergabunglah bersama 120+ anggota dalam ekspedisi pendakian, arung jeram, dan konservasi alam.">
+<meta name="twitter:image"       content="https://karmapala.id/og-image.jpg">
+<meta name="twitter:image:alt"   content="Karmapala – Pencinta Alam dan Penempuh Rimba">
+
+<!-- ═══ STRUCTURED DATA — Google Rich Results ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Karmapala",
+  "alternateName": "Keluarga Besar Pencinta Alam dan Penempuh Rimba",
+  "url": "https://karmapala.id/",
+  "logo": "https://karmapala.id/logo.jpg",
+  "image": "https://karmapala.id/og-image.jpg",
+  "description": "Karmapala adalah organisasi pencinta alam aktif sejak 2017. Bergerak di bidang pendakian, arung jeram, konservasi alam, dan pengembangan karakter anggota.",
+  "foundingDate": "2017",
+  "numberOfEmployees": { "@type": "QuantitativeValue", "value": 120 },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+62-895-0758-7025",
+      "contactType": "customer support",
+      "availableLanguage": "Indonesian"
+    }
+  ],
+  "sameAs": [
+    "https://instagram.com/humas_karmapala"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Jl. Pelajar No. 17, Gedung B",
+    "addressCountry": "ID"
+  },
+  "email": "karmapala.official@gmail.com"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Preload critical font subsets for faster LCP -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --bg:#060606;--bg2:#0b0b0b;--card:#111111;--card2:#161616;
+  --orange:#FF6500;--oL:#FF8928;--oD:#cc4f00;
+  --oglow:rgba(255,101,0,0.32);--ofnt:rgba(255,101,0,0.07);--obdr:rgba(255,101,0,0.18);
+  --txt:#e8e8e8;--txt2:#909090;--txt3:#484848;
+  --sdot:#242424;--shd:0 4px 40px rgba(0,0,0,0.85);
+  --glow:0 0 28px rgba(255,101,0,0.45),0 0 70px rgba(255,101,0,0.12);
+  --depth-shadow:0 2px 8px rgba(0,0,0,0.4),0 8px 28px rgba(0,0,0,0.35),0 20px 60px rgba(0,0,0,0.22);
+  --ambient-glow:0 0 80px rgba(255,101,0,0.06);
+  --rad:18px;--rad-sm:12px;
+  --nav-h:60px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --nav-total: calc(var(--nav-h) + var(--safe-top));
+  --ease-spring:cubic-bezier(0.16,1,0.3,1);
+  --ease-smooth:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0,0,0.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{
+  scroll-behavior:smooth;
+  /* iOS momentum scroll — deprecated in modern iOS but harmless */
+  -webkit-overflow-scrolling:touch;
+  text-size-adjust:100%;-webkit-text-size-adjust:100%;
+  /* Prevent font scaling on orientation change — iOS */
+  -webkit-text-size-adjust:100%;
+  height:100%;
+}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--bg);color:var(--txt);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  /* Prevent rubber-band scroll revealing white bg on iOS */
+  overscroll-behavior-y:none;
+  /* Android Chrome pull-to-refresh prevention */
+  overscroll-behavior-x:none;
+  touch-action:manipulation;
+  /* iOS body height fix */
+  min-height:100%;
+  min-height:-webkit-fill-available;
+}
+
+/* ===== LOADING ===== */
+#loadingScreen{
+  position:fixed;inset:0;z-index:99999;background:#020202;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+  transition:opacity .65s var(--ease-smooth),visibility .65s;
+  will-change:opacity;
+  /* iOS: ensure it covers the notch */
+  padding-top:env(safe-area-inset-top, 0px);
+}
+#loadingScreen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+
+
+/* ===== SCROLL PROGRESS ===== */
+.scroll-prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--oL));z-index:9998;width:0;pointer-events:none}
+
+/* ===== BACK TO TOP ===== */
+#btt{display:none!important}
+
+/* ===== NAV — Transparent Liquid Glass ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;justify-content:space-between;
+  align-items:center;
+  padding:10px 16px 10px;
+  padding-top:calc(10px + env(safe-area-inset-top, 0px));
+  background:transparent;
+  border-bottom:none;
+  box-shadow:none;
+  transition:transform .5s cubic-bezier(0.16,1,0.3,1), background .5s var(--ease-smooth), box-shadow .5s var(--ease-smooth);
+  /* iOS: force compositing layer for smooth position:fixed */
+  will-change:transform;
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
+  -webkit-tap-highlight-color:transparent;
+  /* Prevent subpixel rendering artifacts on iOS */
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+}
+nav.scrolled{
+  background:rgba(6,6,6,0.75);
+  -webkit-backdrop-filter:blur(28px) saturate(180%) brightness(1.05);
+  backdrop-filter:blur(28px) saturate(180%) brightness(1.05);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  box-shadow:0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.3), var(--ambient-glow);
+  /* iOS: isolation needed for backdrop-filter stacking */
+  isolation:isolate;
+}
+nav.hide{transform:translateY(-115%)}
+.nav-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.nav-center{display:none}
+.nav-right{display:flex;align-items:center;justify-content:flex-end;flex-shrink:0}
+.nav-logo-img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;filter:drop-shadow(0 0 6px rgba(255,107,0,0.4))}
+.nav-divider{width:1.5px;height:30px;background:rgba(255,255,255,0.3);flex-shrink:0}
+.nav-text{display:flex;flex-direction:column;gap:1px;min-width:0}
+.nav-text span{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:#fff;line-height:1.3;letter-spacing:.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* hamburger — liquid glass pill */
+.hbg{
+  width:44px;height:44px;border-radius:14px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);
+  backdrop-filter:blur(24px) saturate(200%);
+  -webkit-backdrop-filter:blur(24px) saturate(200%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  cursor:pointer;transition:background .28s var(--ease-smooth), border-color .28s, box-shadow .28s;
+  padding:0;flex-shrink:0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.1),0 4px 20px rgba(0,0,0,0.25);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  min-width:44px;min-height:44px;
+}
+.hbg:hover,.hbg.on{
+  background:rgba(255,101,0,0.10);
+  border-color:rgba(255,101,0,0.35);
+  box-shadow:0 0 18px rgba(255,101,0,0.20),inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.hbg .b{width:15px;height:1.5px;background:rgba(235,235,235,0.8);border-radius:2px;transition:.4s cubic-bezier(0.16,1,0.3,1);transform-origin:center}
+.hbg.on .b{background:var(--orange)}
+.hbg.on .b:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hbg.on .b:nth-child(2){opacity:0;transform:scaleX(0)}
+.hbg.on .b:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* dropdown menu — deep liquid glass */
+.nmenu{
+  position:fixed;top:var(--nav-total);inset-inline:0;
+  background:rgba(5,5,5,0.85);
+  -webkit-backdrop-filter:blur(28px) saturate(180%) brightness(1.04);
+  backdrop-filter:blur(28px) saturate(180%) brightness(1.04);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  z-index:998;transform:translateY(-108%) scale(0.99);
+  transition:transform .45s cubic-bezier(0.16,1,0.3,1), opacity .35s var(--ease-smooth);
+  opacity:0;
+  box-shadow:0 32px 80px rgba(0,0,0,0.65),inset 0 1px 0 rgba(255,255,255,0.07),var(--ambient-glow);
+  /* iOS safe max-height using svh */
+  max-height:calc(100svh - var(--nav-total));
+  max-height:calc(100dvh - var(--nav-total)); /* fallback for older iOS */
+  overflow-y:auto;
+  will-change:transform,opacity;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  /* iOS: force compositing */
+  -webkit-transform:translateY(-108%) scale(0.99) translateZ(0);
+  isolation:isolate;
+}
+.nmenu.on{transform:translateY(0) scale(1);opacity:1}
+.nmenu-inner{padding:14px 18px 20px;display:flex;flex-direction:column;gap:3px}
+.nmi{
+  display:flex;align-items:center;gap:12px;padding:14px 14px;
+  border-radius:14px;text-decoration:none;color:var(--txt);
+  font-size:15px;font-weight:600;
+  border:1px solid rgba(255,255,255,0.04);
+  background:rgba(255,255,255,0.015);
+  transition:background .22s var(--ease-smooth),border-color .22s,color .22s,transform .2s var(--ease-spring);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  min-height:52px;
+}
+.nmi:hover,.nmi:active{
+  background:rgba(255,101,0,0.07);
+  color:var(--orange);
+  border-color:rgba(255,101,0,0.16);
+  transform:translateX(3px);
+}
+.nmi:active{transform:scale(0.98);transition-duration:.1s}
+.nmi-ic{font-size:17px;width:22px;text-align:center;flex-shrink:0}
+.nmi-lbl{flex:1}
+.nmi-arr{color:var(--txt3);font-size:11px}
+.nmi:hover .nmi-arr{color:var(--orange)}
+.ndiv{height:1px;background:rgba(255,255,255,0.04);margin:6px 0}
+.ncta{
+  display:block;margin-top:6px;padding:13px;
+  background:linear-gradient(135deg,rgba(255,107,0,0.85),rgba(255,140,53,0.85));
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-radius:14px;text-align:center;color:#fff;
+  font-weight:700;font-size:14px;text-decoration:none;letter-spacing:.4px;
+  box-shadow:0 0 28px rgba(255,107,0,0.35),inset 0 1px 0 rgba(255,255,255,0.2);
+  border:1px solid rgba(255,107,0,0.4);
+}
+.novl{position:fixed;inset:0;z-index:997;background:rgba(0,0,0,0.3);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .35s}
+.novl.on{opacity:1;pointer-events:all}
+
+/* ===== SECTIONS ===== */
+/* Sections ===== */
+section{padding:82px 20px 58px;background:var(--bg);contain:paint}
+section.alt{background:var(--bg2)}
+/* content-visibility: skip rendering off-screen sections (Chrome 85+, Safari 18+) */
+section:not(#beranda):not(#tentang){content-visibility:auto;contain-intrinsic-size:0 600px}
+@media(max-width:480px){section{padding:76px 16px 52px}}
+.stag{display:block;text-align:center;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,107,0,0.25);background:rgba(255,107,0,0.07);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:5px 14px;border-radius:50px;margin-bottom:14px;width:fit-content;margin-left:auto;margin-right:auto;box-shadow:inset 0 1px 0 rgba(255,255,255,0.06)}
+h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,8vw,50px);letter-spacing:1px;line-height:1.05;color:var(--txt);text-align:center}
+h2 .ac{color:var(--orange);text-shadow:0 0 24px var(--oglow)}
+p.lead{font-size:14px;color:var(--txt2);line-height:1.75;margin-top:10px;text-align:center;max-width:380px;margin-left:auto;margin-right:auto}
+
+/* ===== HERO ===== */
+#beranda{
+  /* Fallback stack for iOS Safari 100vh bug */
+  min-height:100vh;
+  min-height:100svh; /* small viewport — safe for iOS 15.4+ */
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding-top:100px;
+  position:relative;overflow:hidden;background:var(--bg);
+}
+.orb{position:absolute;border-radius:50%;pointer-events:none;animation:pulseOrb 4s ease-in-out infinite;will-change:transform,opacity;transform:translateZ(0)}
+.orb1{width:380px;height:380px;top:-100px;right:-120px;background:radial-gradient(circle,rgba(255,107,0,0.22) 0%,transparent 70%)}
+.orb2{width:230px;height:230px;bottom:60px;left:-80px;background:radial-gradient(circle,rgba(255,107,0,0.12) 0%,transparent 70%);animation-duration:5.5s;animation-direction:reverse}
+@keyframes pulseOrb{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.12);opacity:.6}}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,107,0,0.28);background:rgba(255,107,0,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:6px 14px;border-radius:50px;font-size:12px;font-weight:600;color:var(--orange);margin-bottom:18px;animation:fD .7s ease both;box-shadow:inset 0 1px 0 rgba(255,255,255,0.06)}
+.bdot{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange);animation:blink 1.4s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,15vw,88px);letter-spacing:1px;line-height:.92;animation:fU .8s ease .1s both}
+.hero-title .ac{color:var(--orange);text-shadow:0 0 32px var(--oglow)}
+.hero-sub{font-size:14px;color:var(--txt2);line-height:1.75;margin:18px auto 30px;max-width:340px;animation:fU .8s ease .2s both}
+.hero-btns{display:flex;flex-direction:column;gap:10px;width:100%;max-width:260px;margin:0 auto;animation:fU .8s ease .3s both}
+.btn-p{background:linear-gradient(135deg,var(--orange),var(--oL));color:#fff;border:none;padding:16px 26px;border-radius:50px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;display:block;box-shadow:0 0 28px rgba(255,101,0,0.40),0 4px 16px rgba(255,101,0,0.25),inset 0 1px 0 rgba(255,255,255,0.22);transition:box-shadow .35s var(--ease-smooth),transform .25s var(--ease-spring);letter-spacing:.3px;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.btn-p:hover{box-shadow:0 0 36px rgba(255,101,0,0.55),0 0 70px rgba(255,101,0,0.15),inset 0 1px 0 rgba(255,255,255,0.28);transform:translateY(-2px)}
+.btn-p:active{transform:scale(0.97);transition:transform .1s}
+.btn-s{background:transparent;color:var(--txt);border:1.5px solid rgba(255,255,255,0.1);padding:15px 26px;border-radius:50px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none;display:block;transition:.3s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.btn-s:hover{border-color:var(--orange);color:var(--orange)}
+.btn-s:active{transform:scale(0.97)}
+@keyframes fU{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes fD{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+
+/* hero scroll hint */
+.scroll-hint{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:6px;animation:fU .8s ease .5s both}
+.scroll-hint span{font-size:11px;letter-spacing:2px;color:var(--txt3);text-transform:uppercase}
+.scroll-arrow{width:20px;height:32px;border:1.5px solid rgba(255,107,0,0.3);border-radius:10px;display:flex;justify-content:center;padding-top:5px}
+.scroll-arrow::before{content:'';width:4px;height:8px;background:var(--orange);border-radius:2px;animation:scrollBounce 1.6s ease infinite}
+@keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(6px);opacity:.4}}
+
+/* ===== TENTANG ===== */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}
+.stat-card{background:rgba(19,19,19,0.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,107,0,0.18);border-radius:14px;padding:16px 8px;text-align:center;transition:.3s;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 4px 24px rgba(0,0,0,0.3)}
+.stat-card:hover{box-shadow:0 0 28px rgba(255,107,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08);transform:translateY(-3px);border-color:rgba(255,107,0,0.38)}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--orange);text-shadow:0 0 14px var(--oglow);line-height:1}
+.stat-label{font-size:10px;color:var(--txt3);margin-top:4px;font-weight:600;letter-spacing:.5px}
+.vm-cards{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.vm-card{background:rgba(19,19,19,0.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,107,0,0.16);border-radius:14px;padding:18px 16px;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 8px 32px rgba(0,0,0,0.35)}
+.vm-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--orange),var(--oL));border-radius:0 0 0 14px}
+.vm-card h3{font-size:11px;font-weight:700;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px}
+.vm-card p{font-size:13px;color:var(--txt2);line-height:1.65}
+.motto-box{background:linear-gradient(135deg,var(--oD) 0%,var(--orange) 50%,var(--oL) 100%);border-radius:14px;padding:20px;margin-top:12px;text-align:center;box-shadow:0 0 36px rgba(255,107,0,0.4)}
+.motto-box p{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.motto-box h3{font-family:'Bebas Neue',sans-serif;font-size:19px;color:#fff;letter-spacing:1px;line-height:1.3}
+
+/* ===== SEJARAH GLASSMORPHISM ===== */
+.sejarah-glass{
+  margin-top:26px;
+  position:relative;
+  background:rgba(19,19,19,0.7);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,107,0,0.18);
+  border-radius:22px;
+  padding:28px 22px 24px;
+  overflow:hidden;
+  box-shadow:0 8px 48px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.07);
+}
+.sejarah-glass::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,107,0,0.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.sejarah-glass::after{
+  content:'';position:absolute;bottom:-60px;left:-60px;
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,140,53,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.sejarah-year-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;
+  color:var(--orange);border:1px solid rgba(255,107,0,0.3);
+  background:rgba(255,107,0,0.08);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  padding:5px 14px;border-radius:50px;margin-bottom:16px;
+  box-shadow:0 0 18px rgba(255,107,0,0.15),inset 0 1px 0 rgba(255,255,255,0.07);
+}
+.sejarah-year-badge span{width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--orange);animation:blink 1.4s ease infinite;flex-shrink:0}
+.sejarah-glass p{
+  font-size:13.5px;color:var(--txt2);line-height:1.82;
+  position:relative;z-index:1;
+}
+.sejarah-glass p strong{color:var(--orange);font-weight:700}
+.sejarah-milestones{
+  display:flex;flex-wrap:wrap;gap:7px;margin-top:18px;position:relative;z-index:1;
+}
+.sm-chip{
+  font-size:10px;font-weight:700;letter-spacing:1px;
+  color:var(--txt);border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.04);
+  padding:5px 12px;border-radius:50px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:.25s;
+}
+.sm-chip:hover{border-color:rgba(255,107,0,0.35);color:var(--orange);background:rgba(255,107,0,0.07)}
+
+/* ===== SLIDER ===== */
+.slider-wrap{margin-top:22px}
+.slider-track{
+  display:flex;gap:12px;overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  /* snap-stop: always stops at each card, prevents skipping on iOS */
+  scrollbar-width:none;
+  padding-bottom:4px;
+  /* iOS native momentum scroll */
+  -webkit-overflow-scrolling:touch;
+  padding-right:20px;
+  scroll-padding-left:0;
+  overscroll-behavior-x:contain;
+  /* Smooth scroll for dot navigation */
+  scroll-behavior:smooth;
+  /* GPU layer */
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.slider-track::-webkit-scrollbar{display:none}
+.slide-card{
+  flex:0 0 calc(70vw);max-width:260px;min-width:200px;
+  scroll-snap-align:start;
+  scroll-snap-stop:always; /* iOS: always stop at each card, no skipping */
+  border-radius:16px;overflow:hidden;
+  border:1px solid rgba(255,107,0,0.16);
+  background:rgba(19,19,19,0.6);
+  backdrop-filter:blur(20px) saturate(150%);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05);
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+  cursor:pointer;position:relative;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.slide-card:hover{transform:scale(1.02) translateY(-2px);box-shadow:0 0 32px rgba(255,107,0,0.3),inset 0 1px 0 rgba(255,255,255,0.08);border-color:rgba(255,107,0,0.42)}
+.slide-card::after{content:'👁';position:absolute;top:8px;right:10px;font-size:14px;opacity:0;transition:.3s;filter:drop-shadow(0 0 6px rgba(255,107,0,0.8))}
+.slide-card:hover::after{opacity:1}
+.slide-img{width:100%;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;font-size:42px;background:linear-gradient(135deg,#111,#1a1a1a);border-bottom:1px solid var(--obdr);overflow:hidden}
+.slide-img img{width:100%;height:100%;object-fit:contain;background:#111}
+.slide-img.org{background:linear-gradient(135deg,#120b00,#1e1200);flex-direction:column;gap:5px;font-size:34px}
+.org-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--orange);text-transform:uppercase;font-family:'Outfit',sans-serif}
+.slide-body{padding:13px 14px 16px}
+.slide-body h4{font-size:13px;font-weight:700;color:var(--txt)}
+.slide-body p{font-size:11px;color:var(--txt3);margin-top:4px;line-height:1.5}
+.slide-dots{display:flex;justify-content:center;gap:5px;margin-top:14px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--sdot);transition:.3s;cursor:pointer}
+.dot.active{width:20px;border-radius:3px;background:var(--orange);box-shadow:0 0 8px var(--orange)}
+
+/* ===== GALERI VIDEO CARD — handled above ===== */
+.gi-video-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.gi-video-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.15) 55%,transparent 100%);pointer-events:none}
+.gi-video-badge{position:absolute;top:9px;left:9px;display:flex;align-items:center;gap:5px;background:rgba(0,0,0,0.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,107,0,0.3);border-radius:50px;padding:4px 10px;pointer-events:none}
+.gi-video-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--orange);animation:blink 1.4s ease infinite;flex-shrink:0}
+.gi-video-badge span{font-size:9px;font-weight:700;letter-spacing:1.5px;color:#fff;text-transform:uppercase}
+.gi-video-info{position:absolute;bottom:0;left:0;right:0;padding:28px 11px 9px;pointer-events:none}
+.gi-video-title{font-size:11px;font-weight:700;color:#fff;letter-spacing:.2px;line-height:1.3;text-shadow:0 1px 3px rgba(0,0,0,0.8)}
+.gi-video-tag{display:inline-block;margin-top:3px;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,107,0,0.3);padding:2px 7px;border-radius:50px;background:rgba(255,107,0,0.07)}
+
+/* ===== VIDEO LIGHTBOX POPUP ===== */
+#vlb{
+  position:fixed;inset:0;z-index:10000;
+  background:rgba(0,0,0,0);
+  display:flex;align-items:flex-end;justify-content:center;
+  pointer-events:none;transition:background .32s ease;
+}
+#vlb.on{background:rgba(0,0,0,0.96);pointer-events:all}
+#vlb-backdrop{position:absolute;inset:0;z-index:0;cursor:pointer}
+.vlb-sheet{
+  position:relative;z-index:1;
+  width:100%;max-width:480px;
+  background:rgba(13,13,13,0.92);
+  backdrop-filter:blur(40px) saturate(200%);
+  -webkit-backdrop-filter:blur(40px) saturate(200%);
+  border-radius:28px 28px 0 0;
+  border-top:1px solid rgba(255,107,0,0.22);
+  overflow:hidden;
+  transform:translateY(100%);
+  transition:transform .42s cubic-bezier(0.32,0.72,0,1);
+  box-shadow:0 -8px 60px rgba(0,0,0,0.9),inset 0 1px 0 rgba(255,255,255,0.06);
+}
+#vlb.on .vlb-sheet{transform:translateY(0)}
+.vlb-handle{width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:12px auto 0}
+.vlb-top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 18px 4px}
+.vlb-top-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--txt)}
+.vlb-close-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--txt2);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.vlb-close-btn:active{background:rgba(255,107,0,0.25);color:var(--orange);border-color:var(--obdr)}
+.vlb-video-wrap{
+  position:relative;width:100%;
+  aspect-ratio:9/16;
+  max-height:55vh;
+  background:#000;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.vlb-video-wrap video{width:100%;height:100%;object-fit:contain;display:block}
+.vlb-info{padding:4px 18px 36px}
+.vlb-desc{font-size:12px;color:var(--txt2);line-height:1.65}
+.vlb-tag{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,107,0,0.3);padding:3px 9px;border-radius:50px;background:rgba(255,107,0,0.07)}
+.g-section-wrap{margin-top:26px;display:flex;flex-direction:column;gap:6px}
+
+/* ── Row types ── */
+.g-row-full{width:100%}
+.g-row-2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.g-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.g-row-asym-l{display:grid;grid-template-columns:2fr 1fr;gap:6px}
+.g-row-asym-r{display:grid;grid-template-columns:1fr 2fr;gap:6px}
+.g-col-stack{display:flex;flex-direction:column;gap:6px}
+
+/* ── Section divider ── */
+.g-divider{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0 6px;margin:4px 0;
+}
+.g-divider::before{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,107,0,0.18));
+}
+.g-divider span{
+  font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:4px;
+  color:rgba(255,107,0,0.45);white-space:nowrap;text-transform:uppercase;
+}
+.g-divider::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(255,107,0,0.18),transparent);
+}
+
+/* ── Base gallery card ── */
+.gi{
+  position:relative;overflow:hidden;cursor:pointer;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.05);
+  background:#0d0d0d;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),
+             box-shadow .35s cubic-bezier(.16,1,.3,1),
+             border-color .35s;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  will-change:transform;
+}
+.gi:active{transform:scale(0.97)!important;transition:transform .1s}
+@media(hover:hover){
+  .gi:hover{
+    transform:translateY(-3px);
+    border-color:rgba(255,107,0,0.25);
+    box-shadow:0 12px 40px rgba(0,0,0,0.6),0 0 0 1px rgba(255,107,0,0.12);
+  }
+}
+
+/* ── Aspect ratios ── */
+.gi-hero{aspect-ratio:16/7}      /* wide cinematic hero */
+.gi-wide{aspect-ratio:16/9}      /* standard wide */
+.gi-portrait{aspect-ratio:3/4}   /* portrait */
+.gi-square{aspect-ratio:1/1}     /* square */
+.gi-tall{aspect-ratio:2/3}       /* tall portrait */
+
+/* ── Media fill ── */
+.gi-media{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.gi-media img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ── Emoji sizing by type ── */
+.gi-hero .gi-media{font-size:96px}
+.gi-wide .gi-media{font-size:72px}
+.gi-portrait .gi-media{font-size:56px}
+.gi-square .gi-media{font-size:52px}
+.gi-tall .gi-media{font-size:44px}
+.g-row-3 .gi-portrait .gi-media{font-size:36px}
+
+/* ── Gradient backgrounds ── */
+.gb-hike {background:linear-gradient(160deg,#0a1c0d 0%,#112212 50%,#07100a 100%)}
+.gb-water{background:linear-gradient(160deg,#060d1c 0%,#0a152a 50%,#040810 100%)}
+.gb-night{background:linear-gradient(160deg,#060614 0%,#0d0d24 50%,#040408 100%)}
+.gb-eco  {background:linear-gradient(160deg,#071209 0%,#0f2011 50%,#050a06 100%)}
+.gb-climb{background:linear-gradient(160deg,#0d0d0d 0%,#1a1a1a 50%,#090909 100%)}
+.gb-fire {background:linear-gradient(160deg,#180900 0%,#2c1200 50%,#0e0500 100%)}
+.gb-sky  {background:linear-gradient(160deg,#050f1c 0%,#0a1e30 50%,#030810 100%)}
+.gb-earth{background:linear-gradient(160deg,#120b04 0%,#1e1408 50%,#090502 100%)}
+
+/* ── Overlay gradient — minimal, no text to support ── */
+.gi::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(
+    0deg,
+    rgba(0,0,0,0.18) 0%,
+    rgba(0,0,0,0) 40%,
+    rgba(0,0,0,0.06) 100%
+  );
+  transition:opacity .35s;
+}
+@media(hover:hover){.gi:hover::after{opacity:.6}}
+
+/* Inner glow top edge */
+.gi::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:1px;z-index:2;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);
+}
+
+/* ── Info / tag / corner / num — hidden, clean look ── */
+.gi-info,.gi-title,.gi-tag,.gi-corner,.gi-num{display:none}
+
+
+/* ── Video card ── */
+.gi-video-card{
+  position:relative;border-radius:12px;overflow:hidden;cursor:pointer;
+  border:1px solid rgba(255,107,0,0.2);
+  background:#0d0d0d;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .35s;
+  aspect-ratio:3/4;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+@media(hover:hover){
+  .gi-video-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(255,107,0,0.4);
+    box-shadow:0 12px 40px rgba(0,0,0,0.6),0 0 0 1px rgba(255,107,0,0.15);
+  }
+}
+.gi-video-card:active{transform:scale(0.97)!important;transition:transform .1s}
+
+/* ===== LIGHTBOX — Fullscreen Center Liquid Glass ===== */
+#lb{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0);
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+  transition:background .4s ease;
+}
+#lb.on{
+  background:rgba(0,0,0,0.78);
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  pointer-events:all;
+}
+#lb-backdrop{position:absolute;inset:0;z-index:0;cursor:pointer}
+.lb-sheet{
+  position:relative;z-index:1;
+  width:calc(100vw - 32px);
+  max-width:420px;
+  background:rgba(18,18,18,0.5);
+  backdrop-filter:blur(60px) saturate(220%) brightness(1.1);
+  -webkit-backdrop-filter:blur(60px) saturate(220%) brightness(1.1);
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,0.1);
+  overflow:hidden;
+  transform:scale(0.88) translateY(20px);
+  opacity:0;
+  transition:transform .42s cubic-bezier(0.32,0.72,0,1), opacity .35s ease;
+  will-change:transform,opacity;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06) inset,
+    0 8px 80px rgba(0,0,0,0.7),
+    0 2px 0 rgba(255,255,255,0.08) inset;
+}
+#lb.on .lb-sheet{
+  transform:scale(1) translateY(0);
+  opacity:1;
+}
+/* handle removed — clean look */
+.lb-handle{display:none}
+/* close button — top right, floating */
+.lb-close{
+  position:absolute;top:14px;right:14px;z-index:20;
+  width:36px;height:36px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.35);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.7);
+  font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:.25s;
+  flex-shrink:0;
+  line-height:1;
+}
+.lb-close:hover{
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+  border-color:rgba(255,255,255,0.25);
+  box-shadow:0 0 18px rgba(255,255,255,0.1);
+}
+.lb-close:active{transform:scale(0.9)}
+/* carousel */
+.lb-carousel{position:relative;overflow:hidden;touch-action:pan-y;user-select:none;cursor:grab}
+.lb-carousel:active{cursor:grabbing}
+.lb-track{display:flex;transition:transform .32s cubic-bezier(0.25,0.46,0.45,0.94);will-change:transform}
+.lb-track.no-anim{transition:none!important}
+.lb-slide{flex-shrink:0;width:100%}
+.lb-slide-img{
+  width:100%;aspect-ratio:4/5;
+  display:flex;align-items:center;justify-content:center;
+  font-size:100px;position:relative;overflow:hidden;
+  background:rgba(10,10,10,0.6);
+}
+.lb-slide-img img{width:100%;height:100%;object-fit:contain}
+.lb-slide-img::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 80%,rgba(255,107,0,0.06) 0%,transparent 65%);
+  pointer-events:none;
+}
+/* dots */
+.lb-dots-row{display:flex;justify-content:center;gap:5px;padding:12px 0}
+.lb-d{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.18);transition:background .2s,transform .2s;cursor:pointer}
+.lb-d.on{background:var(--orange);transform:scale(1.3);box-shadow:0 0 8px var(--oglow)}
+/* hide content area — no captions */
+.lb-content{display:none}
+/* arrows */
+.lb-arr{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:10;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(0,0,0,0.35);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.75);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:.2s;opacity:.6;
+}
+.lb-arr:hover{opacity:1;background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.25)}
+.lb-arr.prev{left:10px}.lb-arr.next{right:10px}
+.lb-arr.hide{opacity:0;pointer-events:none}
+
+/* ===== JURNAL ===== */
+#jurnal{background:var(--bg)}
+.jurnal-search{margin-top:22px;position:relative}
+.jurnal-search input{width:100%;padding:13px 44px 13px 18px;background:rgba(19,19,19,0.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,107,0,0.18);border-radius:12px;color:var(--txt);font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:.3s;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}
+.jurnal-search input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,0,0.1),inset 0 1px 0 rgba(255,255,255,0.05)}
+.jurnal-search input::placeholder{color:var(--txt3)}
+.jurnal-search .s-ic{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--txt3);pointer-events:none}
+.jurnal-filter{display:flex;gap:7px;margin-top:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.jurnal-filter::-webkit-scrollbar{display:none}
+.jf-btn{flex-shrink:0;padding:6px 14px;border-radius:50px;font-size:12px;font-weight:600;letter-spacing:.5px;border:1px solid var(--obdr);background:var(--card);color:var(--txt2);cursor:pointer;transition:.25s;font-family:'Outfit',sans-serif}
+.jf-btn.on{background:var(--orange);color:#fff;border-color:var(--orange);box-shadow:0 0 14px var(--oglow)}
+.jurnal-grid{display:flex;flex-direction:column;gap:13px;margin-top:18px}
+.jurnal-card{background:rgba(19,19,19,0.55);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,107,0,0.15);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:.3s;text-decoration:none;color:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 4px 20px rgba(0,0,0,0.3)}
+.jurnal-card:hover{box-shadow:0 0 32px rgba(255,107,0,0.2),inset 0 1px 0 rgba(255,255,255,0.07);border-color:rgba(255,107,0,0.38);transform:translateY(-2px)}
+.jc-header{background:linear-gradient(135deg,#120800,#1d1000);padding:18px 16px 14px;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid var(--obdr)}
+.jc-icon{width:50px;height:60px;background:linear-gradient(160deg,var(--orange),var(--oD));border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 18px rgba(255,107,0,0.4);position:relative;overflow:hidden}
+.jc-icon::before{content:'';position:absolute;top:0;left:0;right:0;height:8px;background:rgba(0,0,0,0.25)}
+.jc-icon-lines{display:flex;flex-direction:column;gap:3px;padding:0 8px;margin-top:10px;width:100%}
+.jc-icon-line{height:2px;background:rgba(255,255,255,0.6);border-radius:1px}
+.jc-icon-line:nth-child(2){width:70%}
+.jc-icon-line:nth-child(3){width:55%}
+.jc-icon span{font-size:9px;font-weight:800;color:rgba(255,255,255,0.8);letter-spacing:.5px;margin-top:4px}
+.jc-meta{flex:1;min-width:0}
+.jc-type{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:5px}
+.jc-title{font-size:13px;font-weight:700;color:var(--txt);line-height:1.45;margin-bottom:7px}
+.jc-authors{font-size:11px;color:var(--txt2)}
+.jc-body{padding:12px 16px 14px}
+.jc-abstract{font-size:12px;color:var(--txt2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.jc-footer{padding:10px 16px 14px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.04)}
+.jc-info{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.jc-badge{font-size:10px;font-weight:600;padding:3px 9px;border-radius:50px;letter-spacing:.4px}
+.jb-year{background:rgba(255,107,0,0.1);color:var(--orange);border:1px solid var(--obdr)}
+.jb-vol{background:rgba(255,255,255,0.04);color:var(--txt3);border:1px solid rgba(255,255,255,0.07)}
+.jc-open{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--orange);text-decoration:none;background:var(--ofnt);border:1px solid var(--obdr);padding:5px 12px;border-radius:50px;transition:.25s;flex-shrink:0}
+.jurnal-card:hover .jc-open{background:var(--orange);color:#fff;border-color:var(--orange)}
+.jurnal-empty{text-align:center;padding:40px 20px;color:var(--txt3);font-size:14px;display:none}
+
+/* ===== TESTIMONI ===== */
+.testi-list{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+.testi-card{background:rgba(19,19,19,0.55);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border:1px solid rgba(255,107,0,0.15);border-radius:16px;padding:20px 18px;position:relative;overflow:hidden;transition:.3s;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 8px 32px rgba(0,0,0,0.35)}
+.testi-card::before{content:'"';position:absolute;top:-8px;right:14px;font-family:'Bebas Neue',sans-serif;font-size:84px;color:rgba(255,107,0,0.06);line-height:1;pointer-events:none}
+.testi-card:hover{box-shadow:0 0 28px rgba(255,107,0,0.2),inset 0 1px 0 rgba(255,255,255,0.08);border-color:rgba(255,107,0,0.32)}
+.testi-stars{font-size:13px;margin-bottom:9px;color:var(--orange)}
+.testi-text{font-size:13px;color:var(--txt2);line-height:1.7;font-style:italic;margin-bottom:14px}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--oL));display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;overflow:hidden;border:2px solid rgba(255,101,0,0.35);box-shadow:0 0 12px rgba(255,101,0,0.25)}
+.testi-av img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.testi-name{font-size:12px;font-weight:700;color:var(--txt)}
+.testi-role{font-size:11px;color:var(--txt3);margin-top:2px}
+
+/* ===== PENDAFTARAN ===== */
+.daftar-card{background:rgba(19,19,19,0.6);backdrop-filter:blur(28px) saturate(170%);-webkit-backdrop-filter:blur(28px) saturate(170%);border:1px solid rgba(255,107,0,0.18);border-radius:22px;padding:28px 20px;margin-top:22px;box-shadow:0 0 60px rgba(255,107,0,0.1),inset 0 1px 0 rgba(255,255,255,0.06);position:relative;overflow:hidden;text-align:center}
+.daftar-card::after{content:'';position:absolute;top:-60px;right:-60px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,0.16),transparent 70%);pointer-events:none}
+.daftar-ic{font-size:46px;margin-bottom:14px}
+.daftar-card h3{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--txt);margin-bottom:8px}
+.daftar-card>p{font-size:13px;color:var(--txt2);line-height:1.6;margin-bottom:20px}
+.benefits{text-align:left;margin-bottom:20px}
+.benefit-item{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px;color:var(--txt2)}
+.benefit-item:last-child{border-bottom:none}
+.syarat-list{margin-top:18px;display:flex;flex-direction:column;gap:9px}
+.syarat-item{background:rgba(19,19,19,0.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,107,0,0.14);border-radius:13px;padding:13px 14px;display:flex;align-items:flex-start;gap:11px;transition:.3s;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}
+.syarat-item:hover{box-shadow:0 0 18px rgba(255,107,0,0.2),inset 0 1px 0 rgba(255,255,255,0.06);border-color:rgba(255,107,0,0.3)}
+.syarat-num{width:26px;height:26px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 0 10px var(--oglow)}
+.syarat-text{font-size:12px;color:var(--txt2);line-height:1.55}
+.syarat-text strong{color:var(--txt);display:block;margin-bottom:2px;font-size:13px}
+
+/* ===== FAQ ===== */
+.faq-list{margin-top:22px;display:flex;flex-direction:column;gap:8px}
+.faq-item{background:rgba(19,19,19,0.55);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,107,0,0.14);border-radius:13px;overflow:hidden;transition:.3s;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}
+.faq-item.open{box-shadow:0 0 24px rgba(255,107,0,0.18),inset 0 1px 0 rgba(255,255,255,0.07);border-color:rgba(255,107,0,0.38)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:16px 16px;cursor:pointer;font-size:14px;font-weight:600;color:var(--txt);gap:10px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;min-height:56px}
+.faq-ic{width:26px;height:26px;border-radius:50%;background:var(--ofnt);border:1px solid var(--obdr);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--orange);flex-shrink:0;transition:.3s}
+.faq-item.open .faq-ic{transform:rotate(45deg);background:var(--orange);color:#fff;border-color:var(--orange)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1),padding .35s;font-size:13.5px;color:var(--txt2);line-height:1.7;padding:0 16px}
+.faq-a.open{max-height:400px;padding:0 16px 18px}
+
+/* ===== KONTAK ===== */
+.kontak-grid{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.kontak-card{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.03);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px 18px;text-decoration:none;color:#fff;transition:.3s;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);-webkit-tap-highlight-color:transparent;touch-action:manipulation;min-height:72px}
+.kontak-card:hover{border-color:rgba(255,107,0,0.35);background:rgba(255,107,0,0.07);box-shadow:0 0 22px rgba(255,107,0,0.2),inset 0 1px 0 rgba(255,255,255,0.07);transform:translateY(-1px)}
+.kontak-ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kontak-ic svg{width:24px;height:24px;display:block}
+.k-wa{background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.2);box-shadow:0 0 16px rgba(37,211,102,0.08)}
+.k-ig{background:rgba(255,107,0,0.12);border:1px solid rgba(255,107,0,0.2);box-shadow:0 0 16px rgba(255,107,0,0.08)}
+.k-em{background:rgba(100,150,255,0.12);border:1px solid rgba(100,150,255,0.2);box-shadow:0 0 16px rgba(100,150,255,0.08)}
+.k-loc{background:rgba(255,220,50,0.1);border:1px solid rgba(255,220,50,0.18);box-shadow:0 0 16px rgba(255,220,50,0.06)}
+.kontak-info{flex:1;min-width:0}
+.kontak-lbl{font-size:10px;color:var(--txt3);letter-spacing:1px;text-transform:uppercase}
+.kontak-val{font-size:13px;font-weight:700;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kontak-sub{font-size:11px;color:var(--txt3);margin-top:2px;line-height:1.4}
+.kontak-arr{color:var(--txt3);font-size:14px;flex-shrink:0;opacity:0;transition:.25s}
+.kontak-card:hover .kontak-arr{opacity:1;color:var(--orange)}
+
+
+/* ===== CTA PENUTUP ===== */
+#cta-join{background:linear-gradient(160deg,#0a0600 0%,#130c00 40%,#080808 100%);padding:76px 20px;text-align:center;position:relative;overflow:hidden}
+#cta-join::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,0.14),transparent 70%);pointer-events:none}
+.cta-icon{font-size:56px;margin-bottom:18px;animation:floatY 3s ease-in-out infinite;display:block}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.cta-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,10vw,62px);letter-spacing:1px;line-height:1;margin-bottom:14px}
+.cta-sub{font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:28px;max-width:300px;margin-left:auto;margin-right:auto}
+.cta-btns{display:flex;flex-direction:column;gap:10px;max-width:310px;margin:0 auto}
+
+/* ===== FOOTER ===== */
+footer{background:#040404;padding:48px 20px 30px;text-align:center;border-top:1px solid rgba(255,107,0,0.1)}
+.footer-brand{display:inline-flex;align-items:center;gap:12px;margin-bottom:22px}
+.footer-logo-img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;filter:drop-shadow(0 0 6px rgba(255,107,0,0.4))}
+.footer-divider{width:1.5px;height:30px;background:rgba(255,255,255,0.3);flex-shrink:0}
+.footer-text{display:flex;flex-direction:column;gap:1px;text-align:left}
+.footer-text span{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:#fff;line-height:1.3;letter-spacing:.1px}
+.footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-bottom:24px}
+.footer-nav a{font-size:11px;color:var(--txt3);text-decoration:none;transition:.3s;letter-spacing:.3px}
+.footer-nav a:hover{color:var(--orange)}
+.footer-div{height:1px;background:rgba(255,255,255,0.04);margin:18px 0}
+.footer-copy{font-size:11px;color:#383838}
+.footer-copy span{color:var(--orange)}
+
+/* ===== REVEAL ===== */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.reveal.vis{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{transition:opacity .3s ease}.reveal.vis{transform:none}}
+
+/* ===== LIQUID GLASS SYSTEM — Gen 2 — Deeper, More Premium ===== */
+:root{
+  --glass-bg: rgba(16,16,16,0.72);
+  --glass-bg-warm: rgba(20,14,8,0.70);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-border-warm: rgba(255,255,255,0.07);
+  --glass-blur: blur(20px) saturate(180%);
+  --glass-blur-light: blur(14px) saturate(160%);
+  --glass-shadow: 0 2px 12px rgba(0,0,0,0.3), 0 8px 36px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.09), inset 0 0 0 1px rgba(255,255,255,0.04);
+  --glass-shadow-deep: 0 4px 24px rgba(0,0,0,0.4), 0 16px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  --glass-orange-tint: rgba(255,101,0,0.05);
+}
+
+/* Stat cards */
+.stat-card{
+  background:var(--glass-bg-warm) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+  border:1px solid var(--glass-border-warm) !important;
+  box-shadow:var(--glass-shadow) !important;
+  transition:transform .4s var(--ease-spring),box-shadow .4s,border-color .3s !important;
+}
+.stat-card:hover{
+  background:rgba(255,101,0,0.04) !important;
+  border-color:rgba(255,101,0,0.20) !important;
+  box-shadow:0 0 24px rgba(255,101,0,0.12), var(--glass-shadow) !important;
+}
+
+/* Vision/Mission cards */
+.vm-card{
+  background:var(--glass-bg-warm) !important;
+  backdrop-filter:var(--glass-blur-light) !important;
+  -webkit-backdrop-filter:var(--glass-blur-light) !important;
+  border:1px solid var(--glass-border-warm) !important;
+  box-shadow:var(--glass-shadow) !important;
+}
+
+/* Sejarah glass */
+.sejarah-glass{
+  background:rgba(255,101,0,0.02) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+  border:1px solid rgba(255,255,255,0.07) !important;
+  box-shadow:var(--glass-shadow-deep) !important;
+}
+
+/* Slider/slide cards */
+.slide-card{
+  background:rgba(255,255,255,0.03) !important;
+  backdrop-filter:var(--glass-blur-light) !important;
+  -webkit-backdrop-filter:var(--glass-blur-light) !important;
+  border:1px solid var(--glass-border) !important;
+  box-shadow:var(--glass-shadow) !important;
+  transition:transform .35s var(--ease-spring),box-shadow .35s,border-color .3s !important;
+}
+.slide-card:hover{
+  background:rgba(255,101,0,0.05) !important;
+  border-color:rgba(255,101,0,0.22) !important;
+  box-shadow:0 0 28px rgba(255,101,0,0.14), var(--glass-shadow) !important;
+}
+
+/* Gallery items — minimal override, let new galeri CSS handle it */
+.gi{
+  border:1px solid rgba(255,255,255,0.05) !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+@media(hover:hover){
+  .gi:hover{
+    border-color:rgba(255,107,0,0.25) !important;
+    box-shadow:0 12px 40px rgba(0,0,0,0.6),0 0 0 1px rgba(255,107,0,0.12) !important;
+  }
+}
+
+/* Prestasi/testi/faq cards */
+.testi-card, .faq-item, .jurnal-card, .syarat-item{
+  background:var(--glass-bg) !important;
+  backdrop-filter:var(--glass-blur-light) !important;
+  -webkit-backdrop-filter:var(--glass-blur-light) !important;
+  border:1px solid var(--glass-border) !important;
+  box-shadow:var(--glass-shadow) !important;
+  transition:transform .35s var(--ease-spring),box-shadow .35s,border-color .3s !important;
+}
+.testi-card:hover, .faq-item.open{
+  background:rgba(255,101,0,0.035) !important;
+  border-color:rgba(255,101,0,0.15) !important;
+  box-shadow:0 0 24px rgba(255,101,0,0.10), var(--glass-shadow) !important;
+}
+
+/* Kontak cards */
+.kontak-card{
+  background:rgba(255,255,255,0.025) !important;
+  backdrop-filter:var(--glass-blur-light) !important;
+  -webkit-backdrop-filter:var(--glass-blur-light) !important;
+  border:1px solid rgba(255,255,255,0.07) !important;
+  box-shadow:var(--glass-shadow) !important;
+  transition:transform .35s var(--ease-spring),box-shadow .35s,border-color .3s,background .3s !important;
+}
+.kontak-card:hover{
+  background:rgba(255,101,0,0.045) !important;
+  border-color:rgba(255,101,0,0.18) !important;
+  transform:translateY(-2px) !important;
+}
+
+/* Pendaftaran/Daftar card */
+.daftar-card{
+  background:rgba(255,255,255,0.025) !important;
+  backdrop-filter:var(--glass-blur) !important;
+  -webkit-backdrop-filter:var(--glass-blur) !important;
+  border:1px solid rgba(255,255,255,0.08) !important;
+  box-shadow:0 0 50px rgba(255,101,0,0.06), var(--glass-shadow-deep) !important;
+}
+
+/* Search input */
+.jurnal-search input{
+  background:rgba(255,255,255,0.04) !important;
+  backdrop-filter:blur(32px) !important;
+  -webkit-backdrop-filter:blur(32px) !important;
+  border:1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* Filter buttons */
+.jf-btn{
+  background:rgba(255,255,255,0.04) !important;
+  backdrop-filter:blur(20px) !important;
+  -webkit-backdrop-filter:blur(20px) !important;
+  border:1px solid rgba(255,255,255,0.07) !important;
+}
+
+/* Section tags / badges */
+.stag, .badge{
+  background:rgba(255,101,0,0.065) !important;
+  backdrop-filter:blur(20px) !important;
+  -webkit-backdrop-filter:blur(20px) !important;
+  border:1px solid rgba(255,101,0,0.16) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.07) !important;
+}
+
+/* Motto box — keep gradient but add glass */
+.motto-box{
+  backdrop-filter:blur(20px) !important;
+  -webkit-backdrop-filter:blur(20px) !important;
+  box-shadow:0 0 40px rgba(255,107,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+}
+
+/* Back to top button — hidden */
+#btt{ display:none !important; }
+
+/* Video lightbox sheet */
+.vlb-sheet{
+  background:rgba(10,10,10,0.55) !important;
+  backdrop-filter:blur(60px) saturate(220%) !important;
+  -webkit-backdrop-filter:blur(60px) saturate(220%) !important;
+  border-top:1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* #vlb mirrors #lb — centered, not bottom sheet */
+#vlb{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0);
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+  transition:background .4s ease;
+}
+#vlb.on{
+  background:rgba(0,0,0,0.78);
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  pointer-events:all;
+}
+#vlb #vlb-backdrop{position:absolute;inset:0;z-index:0;cursor:pointer}
+#vlb .lb-sheet{
+  position:relative;z-index:1;
+  width:calc(100vw - 32px);
+  max-width:360px;
+  transform:scale(0.88) translateY(20px);
+  opacity:0;
+  transition:transform .42s cubic-bezier(0.32,0.72,0,1), opacity .35s ease;
+  pointer-events:none;
+}
+#vlb.on .lb-sheet{
+  transform:scale(1) translateY(0);
+  opacity:1;
+  pointer-events:all;
+}
+
+/* Jurnal card header */
+.jc-header{
+  background:rgba(255,107,0,0.04) !important;
+  backdrop-filter:blur(20px) !important;
+  -webkit-backdrop-filter:blur(20px) !important;
+}
+
+/* ===================================================
+   MOBILE PERFORMANCE — iOS & Android
+   =================================================== */
+
+/* ── Reduce heavy backdrop-filter on mobile (biggest perf win) ── */
+@media(max-width:768px){
+  .card-3d{transform:none !important}
+  .card-3d:active{transform:scale(.98) !important;transition:transform .12s}
+
+  /* Lower blur radius saves significant GPU time on mobile */
+  nav.scrolled{
+    backdrop-filter:blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter:blur(20px) saturate(160%) !important;
+  }
+  .nmenu{
+    backdrop-filter:blur(18px) saturate(150%) !important;
+    -webkit-backdrop-filter:blur(18px) saturate(150%) !important;
+  }
+  .testi-card,.faq-item,.jurnal-card,.syarat-item,.slide-card{
+    backdrop-filter:blur(8px) saturate(130%) !important;
+    -webkit-backdrop-filter:blur(8px) saturate(130%) !important;
+  }
+  .stat-card,.vm-card,.daftar-card,.kontak-card,.sejarah-glass{
+    backdrop-filter:blur(10px) saturate(140%) !important;
+    -webkit-backdrop-filter:blur(10px) saturate(140%) !important;
+  }
+  /* Lightbox blur on mobile */
+  .lb-sheet,.vlb-sheet{
+    backdrop-filter:blur(24px) saturate(160%) !important;
+    -webkit-backdrop-filter:blur(24px) saturate(160%) !important;
+  }
+  /* Disable particle canvas on small mobile for battery */
+  #particleCanvas{ opacity:.3 !important }
+}
+
+/* ── iOS Safari specific ── */
+@supports (-webkit-touch-callout:none){
+  /* Fix for iOS input zoom - all inputs must be 16px+ */
+  input, textarea, select { font-size:16px !important; }
+
+  /* iOS momentum scroll on overflow containers */
+  .nmenu, .slider-track, .jurnal-filter {
+    -webkit-overflow-scrolling:touch;
+  }
+
+  /* iOS Safari: position:fixed elements flicker without this */
+  nav, .scroll-prog, #loadingScreen, #lb, #vlb {
+    -webkit-transform:translateZ(0);
+    -webkit-backface-visibility:hidden;
+  }
+}
+
+/* ── Android Chrome specific ── */
+@media screen and (min-resolution:1.5dppx){
+  /* High-DPI Android: reduce shadow complexity */
+  .slide-card,.testi-card,.faq-item{
+    box-shadow:0 2px 12px rgba(0,0,0,0.35) !important;
+  }
+}
+
+/* ── Touch devices: remove hover states that cause sticky behavior ── */
+@media(hover:none),(pointer:coarse){
+  .slide-card:hover{transform:none !important;box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05) !important;border-color:rgba(255,107,0,0.16) !important}
+  .slide-card::after{display:none} /* hide the eye emoji hover indicator */
+  .stat-card:hover{transform:none !important}
+  .vm-card:hover{transform:none !important}
+  .jurnal-card:hover{transform:none !important;border-color:rgba(255,107,0,0.15) !important}
+  .testi-card:hover{box-shadow:var(--glass-shadow) !important}
+  .sm-chip:hover{border-color:rgba(255,255,255,0.08) !important;color:var(--txt) !important;background:rgba(255,255,255,0.04) !important}
+  /* Active states for touch feedback */
+  .slide-card:active{transform:scale(0.97) !important;transition:transform .1s !important}
+  .kontak-card:active{background:rgba(255,101,0,0.07) !important;border-color:rgba(255,107,0,0.35) !important}
+  .nmi:active{background:rgba(255,101,0,0.07) !important;transform:none !important}
+}
+
+/* ── Reduce motion — accessibility + battery ── */
+@media(prefers-reduced-motion:reduce){
+  .reveal,.reveal-left,.reveal-right,.reveal-scale{
+    transition:opacity .3s ease !important;
+    transform:none !important;
+  }
+  .reveal.vis,.reveal-left.vis,.reveal-right.vis,.reveal-scale.vis{transform:none !important}
+  .reveal-stagger > *{transition:opacity .3s ease !important}
+  .orb{animation:none !important}
+  .bdot,.blink,.cta-badge{animation:none !important}
+  .cta-pulse-ring{animation:none !important}
+  .scroll-hint-line{animation:none !important}
+  #particleCanvas{display:none !important}
+}
+
+/* ── GPU hints for composite layers ── */
+.slider-track{
+  -webkit-transform:translateZ(0);transform:translateZ(0);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+}
+/* Contain paint only — layout contain blocks scroll propagation on mobile */
+section{contain:paint}
+.slide-card,.gi,.testi-card,.faq-item,.jurnal-card{
+  contain:paint;
+}
+
+/* ── Tap target sizes — minimum 44×44px (Apple HIG / Google MDC) ── */
+.nmi{min-height:52px}
+.dot{min-width:24px;min-height:24px;display:flex;align-items:center;justify-content:center}
+.faq-q{min-height:56px}
+.kontak-card{min-height:72px}
+.jf-btn{min-height:36px}
+.lb-arr{min-width:44px;min-height:44px}
+.lb-close,.vlb-close-btn{min-width:44px;min-height:44px}
+
+/* ── Prevent double-tap zoom on interactive elements ── */
+a,button,.slide-card,.gi,.faq-q,.kontak-card,.nmi,.jf-btn,.dot{
+  touch-action:manipulation;
+}
+
+/* ── Fix iOS input focus jumping ── */
+.jurnal-search input{
+  font-size:16px !important;
+  /* Prevent iOS zoom */
+  -webkit-appearance:none;
+  border-radius:12px; /* must not be 0 or iOS shows square */
+}
+
+/* ── Safe area padding for bottom nav/CTA sections ── */
+footer{
+  padding-bottom:calc(30px + env(safe-area-inset-bottom, 0px));
+}
+#cta-join{
+  padding-bottom:calc(90px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+/* ── Fix vlb sheet safe area ── */
+.vlb-info{
+  padding-bottom:max(36px, calc(20px + env(safe-area-inset-bottom, 0px)));
+  padding-bottom:max(36px, calc(20px + constant(safe-area-inset-bottom, 0px)));
+}
+
+/* ── Lightbox sheet drag — ensure no overscroll on iOS ── */
+.lb-sheet,.vlb-sheet{
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* ── Video element iOS fixes ── */
+video{
+  /* Prevent iOS from showing inline play button on autoplay */
+  -webkit-playsinline:true;
+  /* Prevent iOS from entering fullscreen on tap */
+  playsinline:true;
+}
+
+/* ── Fix font rendering on Android ── */
+@media screen and (-webkit-min-device-pixel-ratio:1.5){
+  body{-webkit-font-smoothing:subpixel-antialiased}
+}
+
+/* ── Prevent text selection flash on tap (Android Chrome) ── */
+.slide-card,.gi,.gi-video-card,.faq-q,.nmi,.kontak-card,.dot{
+  user-select:none;-webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* Better tap targets across all interactive elements */
+a,button,[onclick]{-webkit-tap-highlight-color:transparent}
+
+/* Smooth momentum scroll on iOS */
+.slider-track,.nmenu,.jurnal-filter{-webkit-overflow-scrolling:touch}
+
+/* Optimize animations for GPU composite */
+.orb,.hero-title,.cta-badge{
+  will-change:transform;
+  -webkit-transform:translateZ(0);transform:translateZ(0);
+}
+
+/* Video card mobile fix */
+.gi-video-card{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+
+/* ── Responsive small screens ── */
+@media(max-width:390px){
+  .hero-title,h1{font-size:clamp(52px,18vw,80px)}
+  .stats-row{grid-template-columns:repeat(3,1fr);gap:7px}
+  .stat-num{font-size:26px}
+  .stat-label{font-size:9px}
+  .slide-card{flex:0 0 78vw}
+  .g-row-3{grid-template-columns:1fr 1fr;gap:7px}
+  .g-row-2{gap:7px}
+  .g-section-wrap{gap:7px}
+}
+@media(max-width:360px){
+  .nav-text span{font-size:12px}
+  .slide-card{flex:0 0 84vw}
+}
+
+/* ── Jurnal search mobile keyboard handling ── */
+/* font-size:16px prevents iOS zoom on focus — already covered in @supports block above */
+
+/* ====================================================
+   PHASE 1 & 2 — IMMERSIVE UPGRADE LAYER
+   ==================================================== */
+
+/* ─── LOADING — Logo + progress bar ──────── */
+.ld-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:24px;
+  animation:ldIn .6s var(--ease-spring) both;
+}
+@keyframes ldIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+
+/* ── Logo ── */
+.ld-logo{
+  width:72px;height:72px;border-radius:50%;
+  overflow:hidden;
+  box-shadow:0 0 0 1px rgba(255,101,0,0.20),
+             0 0 28px rgba(255,101,0,0.12);
+}
+.ld-logo img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  border-radius:50%;
+}
+
+/* ── Progress bar tipis di bawah ring ── */
+.ld-progress{
+  width:80px;height:2px;
+  background:rgba(255,255,255,0.06);
+  border-radius:2px;
+  overflow:hidden;
+  margin-top:-8px;
+}
+.ld-progress-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--oD),var(--orange),var(--oL));
+  border-radius:2px;
+  animation:ldProgress 3s var(--ease-smooth) forwards;
+  box-shadow:0 0 6px var(--oglow);
+}
+@keyframes ldProgress{
+  0%  { width:0% }
+  40% { width:55% }
+  70% { width:78% }
+  90% { width:92% }
+  100%{ width:100% }
+}
+
+/* KARMAPALA text — not bold */
+.ld-name{
+  font-family:'Outfit',sans-serif;
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:7px;
+  color:rgba(255,255,255,0.4);
+  text-transform:uppercase;
+  animation:ldPulse 1.8s ease-in-out infinite;
+}
+@keyframes ldPulse{
+  0%,100%{ opacity:.4 }
+  50%    { opacity:.75 }
+}
+
+
+
+
+/* ─── INTERACTIVE CURSOR GLOW (desktop) ──────────── */
+#cursorGlow{
+  position:fixed;pointer-events:none;z-index:99998;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,107,0,0.08) 0%,transparent 70%);
+  transform:translate(-50%,-50%);
+  transition:opacity .4s;
+  mix-blend-mode:screen;
+  will-change:transform;
+  opacity:0;
+}
+#cursorDot{
+  position:fixed;pointer-events:none;z-index:99997;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--orange);box-shadow:0 0 14px var(--orange);
+  transform:translate(-50%,-50%);
+  transition:transform .1s,width .25s,height .25s,opacity .3s;
+  opacity:0;mix-blend-mode:screen;
+}
+@media(pointer:coarse){#cursorGlow,#cursorDot{display:none}}
+
+/* ─── AMBIENT PARTICLE SYSTEM ────────────────────── */
+#particleCanvas{
+  position:fixed;inset:0;pointer-events:none;z-index:1;
+  opacity:.55;mix-blend-mode:screen;
+}
+
+/* ─── PARALLAX ORBS (enhanced) ───────────────────── */
+.orb{
+  position:absolute;border-radius:50%;pointer-events:none;
+  will-change:transform,opacity;transform:translateZ(0);
+  filter:blur(1px);
+}
+.orb1{
+  width:480px;height:480px;top:-130px;right:-150px;
+  background:radial-gradient(circle,rgba(255,101,0,0.14) 0%,rgba(255,101,0,0.04) 45%,transparent 70%);
+  animation:pulseOrb 5.5s ease-in-out infinite;
+}
+.orb2{
+  width:280px;height:280px;bottom:80px;left:-90px;
+  background:radial-gradient(circle,rgba(255,101,0,0.08) 0%,transparent 70%);
+  animation:pulseOrb 7.5s ease-in-out infinite reverse;
+}
+.orb3{
+  width:200px;height:200px;top:40%;left:50%;transform:translate(-50%,-50%) !important;
+  background:radial-gradient(circle,rgba(255,130,40,0.05) 0%,transparent 70%);
+  animation:pulseOrb 10s ease-in-out infinite;
+}
+
+/* Hero fog layer */
+.hero-fog{
+  position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,0.6) 0%,transparent 30%,transparent 70%,rgba(0,0,0,0.8) 100%),
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,107,0,0.04) 0%, transparent 60%);
+}
+
+/* ─── SCROLL REVEAL PRO ──────────────────────────── */
+/* Hidden state — no transition (prevents flash) */
+.reveal{opacity:0;transform:translateY(24px);transition:none}
+.reveal-left{opacity:0;transform:translateX(-28px);transition:none}
+.reveal-right{opacity:0;transform:translateX(28px);transition:none}
+.reveal-scale{opacity:0;transform:scale(.94);transition:none}
+/* Staggered children */
+.reveal-stagger > *{opacity:0;transform:translateY(18px);transition:none}
+
+/* Visible state — transitions kick in */
+.reveal.vis{opacity:1;transform:none;transition:opacity .75s var(--ease-spring),transform .75s var(--ease-spring)}
+.reveal-left.vis{opacity:1;transform:none;transition:opacity .75s var(--ease-spring),transform .75s var(--ease-spring)}
+.reveal-right.vis{opacity:1;transform:none;transition:opacity .75s var(--ease-spring),transform .75s var(--ease-spring)}
+.reveal-scale.vis{opacity:1;transform:scale(1);transition:opacity .65s var(--ease-spring),transform .65s var(--ease-spring)}
+
+.reveal-stagger.vis > *{opacity:1;transform:none;transition:opacity .65s var(--ease-spring),transform .65s var(--ease-spring)}
+.reveal-stagger.vis > *:nth-child(1){transition-delay:.04s}
+.reveal-stagger.vis > *:nth-child(2){transition-delay:.10s}
+.reveal-stagger.vis > *:nth-child(3){transition-delay:.16s}
+.reveal-stagger.vis > *:nth-child(4){transition-delay:.22s}
+.reveal-stagger.vis > *:nth-child(5){transition-delay:.28s}
+.reveal-stagger.vis > *:nth-child(6){transition-delay:.34s}
+.reveal-stagger.vis > *:nth-child(7){transition-delay:.40s}
+
+/* Section title reveal line */
+.section-line{
+  display:block;width:0;height:1.5px;
+  background:linear-gradient(90deg,var(--orange),transparent);
+  margin:10px auto 0;
+  transition:width .9s cubic-bezier(.16,1,.3,1);
+}
+.section-line.vis{width:60px}
+
+/* reduced motion handled above */
+
+/* ─── 3D HOVER CARDS ─────────────────────────────── */
+.card-3d{
+  transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s;
+  transform-style:preserve-3d;
+  transform:perspective(800px) rotateX(0) rotateY(0);
+  cursor:pointer;
+  will-change:transform;
+}
+.card-3d:hover{
+  box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 40px rgba(255,107,0,0.2) !important;
+}
+/* Shimmer on 3D cards */
+.card-3d::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(135deg,rgba(255,255,255,0.06) 0%,transparent 50%,rgba(255,107,0,0.04) 100%);
+  opacity:0;transition:opacity .4s;pointer-events:none;z-index:1;
+}
+.card-3d:hover::after{opacity:1}
+
+/* ─── ULTRA CTA ENDING SCENE ─────────────────────── */
+#cta-join{
+  background:#000 !important;
+  padding:100px 20px 90px !important;
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-scene{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 65% 55% at 50% 50%, rgba(255,101,0,0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 100% 40% at 50% 100%, rgba(255,101,0,0.06) 0%, transparent 70%);
+}
+.cta-horizon{
+  position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,101,0,0.35),transparent);
+  box-shadow:0 0 30px rgba(255,101,0,0.20);
+}
+.cta-stars{
+  position:absolute;inset:0;pointer-events:none;overflow:hidden;
+}
+.cta-content{position:relative;z-index:2}
+
+/* Pulsing ring behind CTA */
+.cta-pulse-ring{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  border-radius:50%;border:1px solid rgba(255,101,0,0.09);
+  pointer-events:none;
+}
+.cta-pulse-ring:nth-child(1){width:280px;height:280px;animation:ctaRing 3.5s ease-out infinite}
+.cta-pulse-ring:nth-child(2){width:460px;height:460px;animation:ctaRing 3.5s ease-out infinite .9s}
+.cta-pulse-ring:nth-child(3){width:640px;height:640px;animation:ctaRing 3.5s ease-out infinite 1.8s}
+@keyframes ctaRing{
+  0%{opacity:.5;transform:translate(-50%,-50%) scale(.85)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.15)}
+}
+
+/* CTA Badge enhanced */
+.cta-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--orange);border:1px solid rgba(255,107,0,0.3);
+  background:rgba(255,107,0,0.07);backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  padding:6px 16px;border-radius:50px;margin-bottom:24px;
+  box-shadow:0 0 24px rgba(255,107,0,0.15),inset 0 1px 0 rgba(255,255,255,0.08);
+  animation:ctaBadge 2s ease-in-out infinite;
+}
+@keyframes ctaBadge{0%,100%{box-shadow:0 0 24px rgba(255,107,0,0.15),inset 0 1px 0 rgba(255,255,255,0.08)}50%{box-shadow:0 0 40px rgba(255,107,0,0.3),inset 0 1px 0 rgba(255,255,255,0.12)}}
+
+/* ─── CTA STARS CANVAS ─────────────────────────────── */
+.cta-stars{
+  position:absolute;inset:0;pointer-events:none;overflow:hidden;
+  width:100%;height:100%;
+}
+.atmo-line{
+  position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,107,0,0.08),transparent);
+  pointer-events:none;
+}
+
+/* ─── NAV TACTICAL ENHANCEMENT ───────────────────── */
+.nav-mode-badge{
+  font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,107,0,0.7);border:1px solid rgba(255,107,0,0.2);
+  background:rgba(255,107,0,0.05);padding:2px 7px;border-radius:50px;
+  margin-top:1px;display:inline-block;
+}
+
+/* ─── BRANDING FEEL — Typography enhancement ──────── */
+h2{position:relative}
+.section-eyebrow{
+  font-family:'Outfit',sans-serif;
+  font-size:9px;font-weight:800;letter-spacing:4px;
+  text-transform:uppercase;color:rgba(255,107,0,0.5);
+  margin-bottom:6px;display:block;text-align:center;
+}
+
+/* Hero enhanced */
+#beranda{background:#000 !important}
+.hero-tagline{
+  font-family:'Outfit',sans-serif;
+  font-size:10px;font-weight:700;letter-spacing:5px;
+  color:rgba(255,255,255,0.3);text-transform:uppercase;
+  margin-bottom:16px;animation:fD .8s ease both;
+}
+
+/* Scroll hint enhanced */
+.scroll-hint-line{
+  width:1px;height:40px;
+  background:linear-gradient(to bottom,rgba(255,107,0,0.5),transparent);
+  animation:scrollLine 1.8s ease-in-out infinite;
+}
+@keyframes scrollLine{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.5);opacity:.4}}
+
+/* ─── MOBILE PERFORMANCE — already handled above ─── */
+
+/* =====================================================
+   BACKGROUND FOTO — Utility Classes
+   Cara pakai: tambahkan class .bg-foto ke <section>
+   Ganti URL foto di masing-masing class atau gunakan
+   inline style="--bg-foto:url('foto-kamu.jpg')"
+   ===================================================== */
+
+/* BASE — overlay gelap otomatis agar teks tetap terbaca */
+.bg-foto {
+  position: relative;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  /* Konten di atas overlay */
+}
+.bg-foto > * { position: relative; z-index: 1; }
+/* Overlay gelap default */
+.bg-foto::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(0,0,0,0.62);
+  backdrop-filter: none;
+}
+
+/* Overlay lebih terang (cocok untuk foto cerah) */
+.bg-foto.overlay-light::before { background: rgba(0,0,0,0.42); }
+
+/* Overlay sangat gelap */
+.bg-foto.overlay-dark::before { background: rgba(0,0,0,0.78); }
+
+/* Overlay dengan gradien oranye bawah */
+.bg-foto.overlay-brand::before {
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.55) 0%,
+    rgba(6,6,6,0.72) 60%,
+    rgba(255,101,0,0.18) 100%
+  );
+}
+
+/* Overlay gradien atas-bawah (cocok untuk hero) */
+.bg-foto.overlay-hero::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.7) 0%,
+    rgba(0,0,0,0.3) 40%,
+    rgba(0,0,0,0.75) 100%
+  );
+}
+
+/* ── Preset per section — ganti path foto sesukamu ── */
+
+/* Beranda / Hero */
+#beranda.bg-foto {
+  background-image: var(--bg-beranda, url('foto-beranda.jpg'));
+}
+
+/* Tentang */
+#tentang.bg-foto {
+  background-image: var(--bg-tentang, url('foto-tentang.jpg'));
+}
+
+/* Sejarah */
+#sejarah.bg-foto {
+  background-image: var(--bg-sejarah, url('foto-sejarah.jpg'));
+}
+
+/* Kegiatan */
+#kegiatan.bg-foto {
+  background-image: var(--bg-kegiatan, url('foto-kegiatan.jpg'));
+}
+
+/* Galeri */
+#galeri.bg-foto {
+  background-image: var(--bg-galeri, url('foto-galeri.jpg'));
+}
+
+/* Prestasi */
+#prestasi.bg-foto {
+  background-image: var(--bg-prestasi, url('foto-prestasi.jpg'));
+}
+
+/* Pendaftaran */
+#pendaftaran.bg-foto {
+  background-image: var(--bg-pendaftaran, url('foto-pendaftaran.jpg'));
+}
+
+/* Kontak */
+#kontak.bg-foto {
+  background-image: var(--bg-kontak, url('foto-kontak.jpg'));
+}
+
+/* ── Foto background custom via CSS variable (inline) ──
+   Cara: <section id="galeri" class="bg-foto" style="--bg-foto:url('foto-saya.jpg')">
+   Lalu di CSS di bawah ini section akan menggunakan var tersebut: */
+.bg-foto[style*="--bg-foto"] {
+  background-image: var(--bg-foto) !important;
+}
+
+/* ── Background parallax ringan (hanya desktop) ── */
+@media (hover: hover) {
+  .bg-foto.parallax {
+    background-attachment: fixed;
+  }
+}
+/* iOS tidak support background-attachment:fixed dengan benar */
+@supports (-webkit-touch-callout: none) {
+  .bg-foto.parallax {
+    background-attachment: scroll;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- SKIP NAVIGATION — Accessibility -->
+<a href="#beranda" class="skip-nav" style="position:absolute;top:-100px;left:16px;z-index:999999;background:var(--orange);color:#fff;padding:10px 18px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:top .2s" onfocus="this.style.top='16px'" onblur="this.style.top='-100px'">Lewati navigasi</a>
+
+<!-- CURSOR GLOW (desktop) -->
+<div id="cursorGlow"></div>
+<div id="cursorDot"></div>
+
+<!-- AMBIENT PARTICLE CANVAS -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- LOADING -->
+<div id="loadingScreen">
+  <div class="ld-wrap">
+    <div class="ld-logo"><img src="logo.jpg" alt="Logo Karmapala — Pencinta Alam dan Penempuh Rimba" width="72" height="72"></div>
+    <div class="ld-progress"><div class="ld-progress-bar"></div></div>
+    <div class="ld-name">KARMAPALA</div>
+  </div>
+</div>
+
+<div class="scroll-prog" id="scrollProg"></div>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Kembali ke atas">↑</button>
+
+<!-- NAV -->
+<div class="novl" id="novl" onclick="closeMenu()"></div>
+<nav id="mainNav">
+  <div class="nav-left">
+    <img src="logo.jpg" class="nav-logo-img" alt="Logo Karmapala" width="40" height="40" decoding="async">
+    <div class="nav-divider"></div>
+    <div class="nav-text">
+      <span>Pencinta Alam</span>
+      <span>dan Penempuh Rimba</span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="hbg" id="hbgBtn" onclick="toggleMenu()" 
+      aria-expanded="false" aria-controls="nmenu" aria-label="Buka menu navigasi">
+      <span class="b" aria-hidden="true"></span>
+      <span class="b" aria-hidden="true"></span>
+      <span class="b" aria-hidden="true"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- DROPDOWN MENU -->
+<div class="nmenu" id="nmenu" role="navigation" aria-label="Menu utama" aria-hidden="true">
+  <div class="nmenu-inner">
+    <a class="nmi" href="#beranda" onclick="navGo(event,'beranda')"><span class="nmi-lbl">Beranda</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <a class="nmi" href="#tentang" onclick="navGo(event,'tentang')"><span class="nmi-lbl">Tentang Kami</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <a class="nmi" href="#sejarah" onclick="navGo(event,'sejarah')"><span class="nmi-lbl">Sejarah</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <a class="nmi" href="#kegiatan" onclick="navGo(event,'kegiatan')"><span class="nmi-lbl">Kegiatan</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <a class="nmi" href="#galeri" onclick="navGo(event,'galeri')"><span class="nmi-lbl">Galeri</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <a class="nmi" href="#prestasi" onclick="navGo(event,'prestasi')"><span class="nmi-lbl">Prestasi</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <a class="nmi" href="#struktur" onclick="navGo(event,'struktur')"><span class="nmi-lbl">Struktur Organisasi</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <a class="nmi" href="#jurnal" onclick="navGo(event,'jurnal')"><span class="nmi-lbl">Jurnal Ilmiah</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <a class="nmi" href="#pendaftaran" onclick="navGo(event,'pendaftaran')"><span class="nmi-lbl">Pendaftaran</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <a class="nmi" href="#kontak" onclick="navGo(event,'kontak')"><span class="nmi-lbl">Kontak</span><span class="nmi-arr" aria-hidden="true">›</span></a>
+    <div class="ndiv"></div>
+    <a href="https://forms.gle/yourGoogleFormLink" target="_blank" class="ncta" onclick="closeMenu()">Daftar Sekarang — Gratis!</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="beranda" style="min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:80px;position:relative;overflow:hidden;background:#000;padding-bottom:60px;">
+  <div class="hero-fog"></div>
+  <div class="orb orb1" data-parallax="0.04"></div>
+  <div class="orb orb2" data-parallax="-0.03"></div>
+  <div class="orb orb3" data-parallax="0.02"></div>
+  <p class="hero-tagline" style="animation:fD .7s ease .05s both;">KARMAPALA · EST. 2017</p>
+  <p style="font-size:14px;color:rgba(235,235,235,0.55);line-height:1.6;margin-bottom:10px;animation:fU .7s ease .1s both;">Selamat datang di website resmi<br>Keluarga Besar Pencinta Alam dan Penempuh Rimba</p>
+  <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(68px,20vw,108px);letter-spacing:2px;line-height:0.88;color:#fff;animation:fU .8s ease .18s both;margin-bottom:14px;text-shadow:0 0 60px rgba(255,107,0,0.15);">KARMAPALA</h1>
+  <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,4.5vw,22px);letter-spacing:4px;color:rgba(255,255,255,0.7);animation:fU .8s ease .26s both;margin-bottom:40px;">JUJUR &bull; TABAH &bull; PATRIOT</p>
+  <div style="animation:fU .8s ease .34s both;margin-bottom:36px;">
+    <a href="#sejarah" onclick="sgo(event,'sejarah')" style="background:linear-gradient(135deg,var(--orange),var(--oL));color:#fff;border:none;padding:17px 62px;border-radius:50px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;display:inline-block;box-shadow:0 0 32px rgba(255,107,0,0.5),0 4px 18px rgba(255,107,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);letter-spacing:.3px;position:relative;overflow:hidden;">Jelajah</a>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px;animation:fU .8s ease .5s both;">
+    <span style="font-size:9px;letter-spacing:4px;color:rgba(255,255,255,0.25);text-transform:uppercase;">GULIR</span>
+    <div class="scroll-hint-line"></div>
+  </div>
+</section>
+
+<!-- TENTANG -->
+<section id="tentang" class="alt">
+  <div class="stag">Tentang Kami</div>
+  <h2>BERSAMA <span class="ac">ALAM,</span><br>BERSAMA JIWA</h2>
+  <p class="lead">Karmapala adalah organisasi pencinta alam yang berdiri dengan semangat menjaga alam dan menempa karakter anggotanya melalui pengalaman nyata di alam terbuka.</p>
+  <div class="stats-row reveal-stagger">
+    <div class="stat-card card-3d"><div class="stat-num" data-target="120" data-suffix="+">0</div><div class="stat-label">Anggota Aktif</div></div>
+    <div class="stat-card card-3d"><div class="stat-num" data-target="8" data-suffix="+">0</div><div class="stat-label">Tahun Berdiri</div></div>
+    <div class="stat-card card-3d"><div class="stat-num" data-target="50" data-suffix="+">0</div><div class="stat-label">Ekspedisi</div></div>
+  </div>
+  <div class="vm-cards reveal-stagger">
+    <div class="vm-card card-3d"><h3>Visi</h3><p>Menjadi organisasi pencinta alam yang unggul, berkarakter, dan berdedikasi dalam menjaga kelestarian lingkungan hidup serta mengembangkan potensi anggota secara berkelanjutan.</p></div>
+    <div class="vm-card card-3d"><h3>Misi</h3><p>Mengembangkan kepedulian terhadap alam, membangun jiwa kepemimpinan, menyelenggarakan kegiatan alam yang edukatif, serta menjaga solidaritas antar sesama anggota dan masyarakat.</p></div>
+    <div class="motto-box"><p>Motto Kami</p><h3>"Alam Tempat Kita Belajar,<br>Sesama Kita Jaga Bersama"</h3></div>
+  </div>
+</section>
+
+<!-- SEJARAH -->
+<section id="sejarah">
+  <div class="stag">Sejarah</div>
+  <h2>PERJALANAN <span class="ac">KARMAPALA</span></h2>
+  <span class="section-line"></span>
+  <p class="lead">Dari langkah pertama di 2017 hingga menjadi organisasi kebanggaan daerah.</p>
+  <div class="sejarah-glass reveal">
+    <div class="sejarah-year-badge"><span></span>2017 — KINI</div>
+    <p>
+      <strong>Karmapala</strong> lahir pada tahun <strong>2017</strong> dari tekad sekelompok pemuda pencinta alam yang ingin membangun komunitas solid, peduli lingkungan, dan berani bereksplorasi. Dimulai dengan <strong>ekspedisi perdana ke puncak lokal</strong> bersama 15 anggota awal, semangat itu terus tumbuh. Tahun <strong>2019</strong> menjadi tonggak penting dengan dibentuknya Divisi SAR — wujud nyata tanggung jawab sosial kepada masyarakat dan para pendaki.
+      <br><br>
+      Melewati masa pandemi <strong>2020</strong> dengan tetap aktif melalui pelatihan daring dan aksi konservasi lokal, Karmapala justru semakin tangguh. Kerja keras itu berbuah manis: <strong>Eco-Action Award Regional 2021</strong> diraih atas program penanaman 500 pohon, disusul gelar <strong>Ekspedisi Terbaik Provinsi 2022</strong> saat keanggotaan tembus 100 orang. Puncaknya, <strong>Juara 1 Lintas Alam Nasional 2023</strong> mengharumkan nama daerah ke tingkat nasional. Kini, memasuki babak baru melalui program Diklat terstruktur, Karmapala bergerak mantap menuju satu dekade penuh prestasi dan pengabdian.
+    </p>
+    <div class="sejarah-milestones">
+      <span class="sm-chip">🏔️ 2017 · Berdiri</span>
+      <span class="sm-chip">🧗 2018 · Ekspedisi Perdana</span>
+      <span class="sm-chip">🚨 2019 · Divisi SAR</span>
+      <span class="sm-chip">💪 2020 · Bertahan Pandemi</span>
+      <span class="sm-chip">🌿 2021 · Eco-Action Award</span>
+      <span class="sm-chip">🏆 2022 · 100+ Anggota</span>
+      <span class="sm-chip">🥇 2023 · Juara Nasional</span>
+      <span class="sm-chip">🎓 2024 · Program Diklat</span>
+    </div>
+  </div>
+</section>
+
+<!-- KEGIATAN -->
+<section id="kegiatan" class="alt">
+  <div class="stag">Kegiatan</div>
+  <h2>AKSI <span class="ac">NYATA</span><br>DI LAPANGAN</h2>
+  <p class="lead">Berbagai kegiatan seru yang rutin kami laksanakan bersama seluruh anggota.</p>
+  <div class="slider-wrap reveal">
+    <div class="slider-track" id="sliderKegiatan">
+      <div class="slide-card" onclick="openLB('kegiatan',0)"><div class="slide-img">🏔️</div><div class="slide-body"><h4>Pendakian Gunung</h4><p>Ekspedisi ke puncak-puncak tertinggi Nusantara bersama tim solid.</p></div></div>
+      <div class="slide-card" onclick="openLB('kegiatan',1)"><div class="slide-img">🌊</div><div class="slide-body"><h4>Arung Jeram</h4><p>Menaklukkan derasnya sungai dan menguji keberanian tim.</p></div></div>
+      <div class="slide-card" onclick="openLB('kegiatan',2)"><div class="slide-img">🌱</div><div class="slide-body"><h4>Penanaman Pohon</h4><p>Aksi nyata penghijauan demi kelestarian lingkungan hidup.</p></div></div>
+      <div class="slide-card" onclick="openLB('kegiatan',3)"><div class="slide-img">🏕️</div><div class="slide-body"><h4>Kemah Alam</h4><p>Berbaur dengan alam, mempererat ikatan persaudaraan anggota.</p></div></div>
+      <div class="slide-card" onclick="openLB('kegiatan',4)"><div class="slide-img">🧗</div><div class="slide-body"><h4>Rock Climbing</h4><p>Latihan panjat tebing untuk meningkatkan skill dan mental.</p></div></div>
+      <div class="slide-card" onclick="openLB('kegiatan',5)"><div class="slide-img">🗺️</div><div class="slide-body"><h4>Orientering</h4><p>Navigasi medan menggunakan peta dan kompas secara langsung.</p></div></div>
+      <div class="slide-card" onclick="openLB('kegiatan',6)"><div class="slide-img">🚣</div><div class="slide-body"><h4>Kayaking</h4><p>Menjelajahi sungai dan danau menggunakan kayak bersama anggota.</p></div></div>
+      <div class="slide-card" onclick="openLB('kegiatan',7)"><div class="slide-img">🦅</div><div class="slide-body"><h4>Paralayang</h4><p>Terbang bebas di atas alam terbuka — pengalaman tak terlupakan.</p></div></div>
+      <div class="slide-card" onclick="openLB('kegiatan',8)"><div class="slide-img">🌄</div><div class="slide-body"><h4>Sunrise Camping</h4><p>Bermalam di puncak dan menyaksikan matahari terbit bersama.</p></div></div>
+      <div class="slide-card" onclick="openLB('kegiatan',9)"><div class="slide-img">♻️</div><div class="slide-body"><h4>Bersih Pantai</h4><p>Aksi bersih pantai dan sungai untuk menjaga ekosistem alam.</p></div></div>
+    </div>
+    <div class="slide-dots" id="dotsKegiatan"></div>
+  </div>
+</section>
+
+<!-- GALERI -->
+<section id="galeri">
+  <div class="stag">Galeri</div>
+  <h2>DOKUMENTASI <span class="ac">KEGIATAN</span></h2>
+  <span class="section-line"></span>
+  <p class="lead">Rekam jejak visual petualangan dan aksi nyata Karmapala di alam terbuka.</p>
+
+  <div class="g-section-wrap reveal">
+
+    <!-- BLOK 1: Hero + 2col -->
+    <div class="gi gi-hero gb-hike" onclick="openLB('galeri',0)">
+      <div class="gi-media">🏔️</div>
+      <div class="gi-corner">⤢</div>
+      <div class="gi-info">
+        <div class="gi-title">Ekspedisi Puncak 2023</div>
+        <span class="gi-tag">Ekspedisi</span>
+      </div>
+    </div>
+    <div class="g-row-2">
+      <div class="gi gi-portrait gb-water" onclick="openLB('galeri',1)">
+        <div class="gi-media">🌊</div>
+        <div class="gi-corner">⤢</div>
+        <div class="gi-info">
+          <div class="gi-title">Arung Jeram Citatih</div>
+          <span class="gi-tag">Arung Jeram</span>
+        </div>
+      </div>
+      <div class="gi gi-portrait gb-fire" onclick="openVideoLB()" style="overflow:hidden;">
+        <video src="highlight.mp4" autoplay muted loop playsinline webkit-playsinline preload="none" id="galeriVideo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"></video>
+      </div>
+    </div>
+
+    <!-- BLOK 2: Hero + 2col -->
+    <div class="gi gi-hero gb-night" onclick="openLB('galeri',6)">
+      <div class="gi-media">🌌</div>
+      <div class="gi-corner">⤢</div>
+      <div class="gi-info">
+        <div class="gi-title">Camping Milkyway</div>
+        <span class="gi-tag">Kemah</span>
+      </div>
+    </div>
+    <div class="g-row-2">
+      <div class="gi gi-portrait gb-eco" onclick="openLB('galeri',2)">
+        <div class="gi-media">🌱</div>
+        <div class="gi-corner">⤢</div>
+        <div class="gi-info">
+          <div class="gi-title">Tanam Pohon</div>
+          <span class="gi-tag">Konservasi</span>
+        </div>
+      </div>
+      <div class="gi gi-portrait gb-fire" onclick="openLB('galeri',10)">
+        <div class="gi-media">🔥</div>
+        <div class="gi-corner">⤢</div>
+        <div class="gi-info">
+          <div class="gi-title">Api Unggun</div>
+          <span class="gi-tag">Kemah</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOK 3: Hero + 2col -->
+    <div class="gi gi-hero gb-earth" onclick="openLB('galeri',8)">
+      <div class="gi-media">⛰️</div>
+      <div class="gi-corner">⤢</div>
+      <div class="gi-info">
+        <div class="gi-title">Hidden Canyon</div>
+        <span class="gi-tag">Jelajah</span>
+      </div>
+    </div>
+    <div class="g-row-2">
+      <div class="gi gi-portrait gb-hike" onclick="openLB('galeri',7)">
+        <div class="gi-media">🌄</div>
+        <div class="gi-corner">⤢</div>
+        <div class="gi-info">
+          <div class="gi-title">Sunrise Trek</div>
+          <span class="gi-tag">Hiking</span>
+        </div>
+      </div>
+      <div class="gi gi-portrait gb-climb" onclick="openLB('galeri',3)">
+        <div class="gi-media">🧗</div>
+        <div class="gi-corner">⤢</div>
+        <div class="gi-info">
+          <div class="gi-title">Rock Climbing</div>
+          <span class="gi-tag">Climbing</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LIGHTBOX — Clean Center Popup -->
+<div id="lb">
+  <div id="lb-backdrop"></div>
+  <div class="lb-sheet" id="lbSheet">
+    <button class="lb-close" id="lbCloseBtn">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="lb-carousel" id="lbCarousel">
+      <button class="lb-arr prev hide" id="lbPrev">‹</button>
+      <button class="lb-arr next hide" id="lbNext">›</button>
+      <div class="lb-track" id="lbTrack"></div>
+    </div>
+    <div class="lb-dots-row" id="lbDots"></div>
+    <div class="lb-content">
+      <div class="lb-title" id="lbTitle" style="display:none"></div>
+      <div class="lb-desc" id="lbDesc" style="display:none"></div>
+      <div class="lb-meta" id="lbMeta" style="display:none"></div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO LIGHTBOX POPUP — Clean Center like photo popup -->
+<div id="vlb">
+  <div id="vlb-backdrop"></div>
+  <div class="lb-sheet" id="vlbSheet" style="overflow:hidden;">
+    <button class="lb-close" id="vlbCloseBtn">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div style="width:100%;aspect-ratio:9/16;max-height:75vh;overflow:hidden;border-radius:24px;">
+      <video id="vlbVideo" src="highlight.mp4" autoplay muted loop playsinline webkit-playsinline preload="none" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:24px;"></video>
+    </div>
+  </div>
+</div>
+
+<!-- PRESTASI -->
+<section id="prestasi" class="alt">
+  <div class="stag">Prestasi</div>
+  <h2>JEJAK <span class="ac">JUARA</span><br>KARMAPALA</h2>
+  <p class="lead">Pencapaian membanggakan yang telah diraih oleh anggota dan tim Karmapala.</p>
+  <div class="slider-wrap reveal">
+    <div class="slider-track" id="sliderPrestasi">
+      <div class="slide-card" onclick="openLB('prestasi',0)"><div class="slide-img">🥇</div><div class="slide-body"><h4>Juara 1 Lintas Alam</h4><p>Kompetisi Lintas Alam Nasional 2023 — Kategori Umum.</p></div></div>
+      <div class="slide-card" onclick="openLB('prestasi',1)"><div class="slide-img">🏆</div><div class="slide-body"><h4>Ekspedisi Terbaik</h4><p>Penghargaan Ekspedisi Terbaik Provinsi tahun 2022.</p></div></div>
+      <div class="slide-card" onclick="openLB('prestasi',2)"><div class="slide-img">🎖️</div><div class="slide-body"><h4>SAR Award</h4><p>Kontribusi terbaik dalam kegiatan Search and Rescue daerah.</p></div></div>
+      <div class="slide-card" onclick="openLB('prestasi',3)"><div class="slide-img">🌏</div><div class="slide-body"><h4>Eco-Action Award</h4><p>Pelopor aksi lingkungan tingkat regional 2021.</p></div></div>
+      <div class="slide-card" onclick="openLB('prestasi',4)"><div class="slide-img">🧭</div><div class="slide-body"><h4>Juara Orientering</h4><p>Pemenang kompetisi navigasi alam terbuka tingkat kota.</p></div></div>
+      <div class="slide-card" onclick="openLB('prestasi',5)"><div class="slide-img">⛰️</div><div class="slide-body"><h4>Pendaki Muda Berprestasi</h4><p>Penghargaan untuk anggota termuda yang sukses ekspedisi.</p></div></div>
+      <div class="slide-card" onclick="openLB('prestasi',6)"><div class="slide-img">🥈</div><div class="slide-body"><h4>Juara 2 Panjat Tebing</h4><p>Runner-up kompetisi panjat tebing se-Jawa Barat 2022.</p></div></div>
+      <div class="slide-card" onclick="openLB('prestasi',7)"><div class="slide-img">🎗️</div><div class="slide-body"><h4>Komunitas Terbaik</h4><p>Komunitas pecinta alam terbaik versi Dinas Lingkungan Hidup.</p></div></div>
+      <div class="slide-card" onclick="openLB('prestasi',8)"><div class="slide-img">🌟</div><div class="slide-body"><h4>Outstanding Team</h4><p>Penghargaan tim luar biasa dari Federasi Pecinta Alam Indonesia.</p></div></div>
+      <div class="slide-card" onclick="openLB('prestasi',9)"><div class="slide-img">🛡️</div><div class="slide-body"><h4>Keselamatan Terbaik</h4><p>Rekor nol insiden dalam 5 tahun kegiatan lapangan berturut-turut.</p></div></div>
+    </div>
+    <div class="slide-dots" id="dotsPrestasi"></div>
+  </div>
+</section>
+
+<!-- TESTIMONI -->
+<section id="testimoni">
+  <div class="stag">Testimoni</div>
+  <h2>SUARA <span class="ac">ANGGOTA</span></h2>
+  <p class="lead">Apa kata mereka yang telah merasakan perjalanan bersama Karmapala.</p>
+  <div class="testi-list reveal">
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <div class="testi-text">"Bergabung di Karmapala adalah keputusan terbaik dalam hidup saya. Bukan cuma soal mendaki — tapi tentang bagaimana saya tumbuh sebagai manusia. Solidaritas di sini nyata, bukan sekadar slogan."</div>
+      <div class="testi-author">
+        <div class="testi-av">
+          <!-- GANTI: upload foto Rizal Firmansyah, ubah src di bawah -->
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rizal Firmansyah" loading="lazy" onerror="this.style.display='none';this.parentElement.textContent='🧑'">
+        </div>
+        <div><div class="testi-name">Rizal Firmansyah</div><div class="testi-role">Anggota aktif sejak 2019 · Divisi Lapangan</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <div class="testi-text">"Dulu saya takut ketinggian. Sekarang sudah puncak empat gunung dan ikut kompetisi panjat tebing. Semua berkat pelatihan sabar dan dukungan kakak-kakak di Karmapala!"</div>
+      <div class="testi-author">
+        <div class="testi-av">
+          <!-- GANTI: upload foto Sari Dewi Puspita, ubah src di bawah -->
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sari Dewi Puspita" loading="lazy" onerror="this.style.display='none';this.parentElement.textContent='👩'">
+        </div>
+        <div><div class="testi-name">Sari Dewi Puspita</div><div class="testi-role">Anggota aktif sejak 2021 · Divisi Diklat</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <div class="testi-text">"Program SAR dan navigasi di Karmapala benar-benar membuka wawasan. Skill yang saya dapat di sini tidak ternilai harganya — bahkan sudah membantu dalam situasi darurat nyata."</div>
+      <div class="testi-author">
+        <div class="testi-av">
+          <!-- GANTI: upload foto Hendra Maulana, ubah src di bawah -->
+          <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Hendra Maulana" loading="lazy" onerror="this.style.display='none';this.parentElement.textContent='🧑'">
+        </div>
+        <div><div class="testi-name">Hendra Maulana</div><div class="testi-role">Alumni 2022 · Koordinator SAR Regional</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUKTUR -->
+<section id="struktur" class="alt">
+  <div class="stag">Struktur Organisasi</div>
+  <h2>TEAM <span class="ac">SOLID</span><br>KARMAPALA</h2>
+  <p class="lead">Dikelola oleh individu-individu berpengalaman yang berdedikasi untuk organisasi.</p>
+  <div class="slider-wrap reveal">
+    <div class="slider-track" id="sliderStruktur">
+      <div class="slide-card" onclick="openLB('struktur',0)"><div class="slide-img org">🧑‍💼<span class="org-lbl">Ketua Umum</span></div><div class="slide-body"><h4>Ahmad Fauzan</h4><p>Ketua Umum Karmapala periode 2024–2026</p></div></div>
+      <div class="slide-card" onclick="openLB('struktur',1)"><div class="slide-img org">👩‍💼<span class="org-lbl">Wakil Ketua</span></div><div class="slide-body"><h4>Siti Rahayu</h4><p>Wakil Ketua & Koordinator Lapangan</p></div></div>
+      <div class="slide-card" onclick="openLB('struktur',2)"><div class="slide-img org">📋<span class="org-lbl">Sekretaris</span></div><div class="slide-body"><h4>Rizky Pratama</h4><p>Sekretaris Umum & Administrasi Organisasi</p></div></div>
+      <div class="slide-card" onclick="openLB('struktur',3)"><div class="slide-img org">💰<span class="org-lbl">Bendahara</span></div><div class="slide-body"><h4>Dewi Anggraini</h4><p>Bendahara Umum & Keuangan Organisasi</p></div></div>
+      <div class="slide-card" onclick="openLB('struktur',4)"><div class="slide-img org">📣<span class="org-lbl">Humas</span></div><div class="slide-body"><h4>Budi Santoso</h4><p>Kepala Divisi Humas & Media Sosial</p></div></div>
+      <div class="slide-card" onclick="openLB('struktur',5)"><div class="slide-img org">🎓<span class="org-lbl">Diklat</span></div><div class="slide-body"><h4>Nurul Hidayah</h4><p>Kepala Divisi Pendidikan & Pelatihan</p></div></div>
+      <div class="slide-card" onclick="openLB('struktur',6)"><div class="slide-img org">🏕️<span class="org-lbl">Lapangan</span></div><div class="slide-body"><h4>Hendra Saputra</h4><p>Koordinator Kegiatan Lapangan & Ekspedisi</p></div></div>
+      <div class="slide-card" onclick="openLB('struktur',7)"><div class="slide-img org">🩺<span class="org-lbl">Medis</span></div><div class="slide-body"><h4>Rani Kusuma</h4><p>Kepala Divisi Kesehatan & Keselamatan</p></div></div>
+      <div class="slide-card" onclick="openLB('struktur',8)"><div class="slide-img org">📸<span class="org-lbl">Dokumentasi</span></div><div class="slide-body"><h4>Fajar Maulana</h4><p>Kepala Divisi Dokumentasi & Publikasi</p></div></div>
+      <div class="slide-card" onclick="openLB('struktur',9)"><div class="slide-img org">🌱<span class="org-lbl">Lingkungan</span></div><div class="slide-body"><h4>Yuli Astuti</h4><p>Kepala Divisi Lingkungan & Konservasi</p></div></div>
+    </div>
+    <div class="slide-dots" id="dotsStruktur"></div>
+  </div>
+</section>
+
+<!-- ===== JURNAL ILMIAH ===== -->
+<section id="jurnal">
+  <div class="stag">Jurnal Ilmiah</div>
+  <h2>PUBLIKASI <span class="ac">KARMAPALA</span></h2>
+  <p class="lead">Karya tulis ilmiah dan laporan penelitian anggota Karmapala tentang alam, konservasi, dan petualangan.</p>
+
+  <div class="jurnal-grid reveal" id="jurnalGrid"></div>
+  <div class="jurnal-empty" id="jurnalEmpty">Tidak ada jurnal yang tersedia.</div>
+  <div id="jurnalMoreWrap" style="text-align:center;margin-top:18px;display:none">
+    <button id="jurnalMoreBtn" onclick="showMoreJurnal()" class="btn-s" style="display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:50px;font-size:13px;font-weight:700">
+      <span id="jurnalMoreLabel">Lihat Semua Jurnal</span>
+    </button>
+  </div>
+</section>
+
+<!-- PENDAFTARAN -->
+<section id="pendaftaran" class="alt">
+  <div class="stag">Pendaftaran</div>
+  <h2>BERGABUNG<br><span class="ac">BERSAMA</span> KAMI</h2>
+  <p class="lead">Jadilah bagian dari keluarga besar Karmapala dan rasakan pengalaman luar biasa di alam terbuka.</p>
+  <div class="daftar-card reveal">
+    <img src="logo.jpg" alt="Logo Karmapala" style="width:64px;height:64px;border-radius:50%;object-fit:cover;margin:0 auto 16px;display:block;filter:drop-shadow(0 0 12px rgba(255,107,0,0.5))" loading="lazy" decoding="async" width="64" height="64">
+    <h3>Daftar Anggota Baru</h3>
+    <p>Buka peluang petualanganmu! Isi formulir pendaftaran dan tunggu konfirmasi dari tim kami.</p>
+    <div class="benefits">
+      <div class="benefit-item"><span>✓</span> Akses semua kegiatan ekspedisi</div>
+      <div class="benefit-item"><span>✓</span> Pelatihan SAR & navigasi alam</div>
+      <div class="benefit-item"><span>✓</span> Komunitas solid & dukungan penuh</div>
+      <div class="benefit-item"><span>✓</span> Sertifikat & pengakuan resmi</div>
+      <div class="benefit-item"><span>✓</span> Perlengkapan dasar dari inventaris</div>
+    </div>
+    <a href="https://forms.gle/yourGoogleFormLink" target="_blank" class="btn-p">Isi Formulir Pendaftaran</a>
+    <br><br>
+    <a href="https://wa.me/6289507587025?text=Halo%20Karmapala%2C%20saya%20ingin%20mendaftar%20sebagai%20anggota!" target="_blank" class="btn-s">Tanya via WhatsApp</a>
+  </div>
+  <div style="margin-top:32px">
+    <div class="stag" style="margin-bottom:14px">Syarat & Ketentuan</div>
+    <h2 style="font-size:clamp(24px,7vw,38px)">SYARAT <span class="ac">PENDAFTARAN</span></h2>
+    <div class="syarat-list reveal">
+      <div class="syarat-item"><div class="syarat-num">1</div><div class="syarat-text"><strong>Status Pelajar / Mahasiswa</strong>Terbuka untuk pelajar SMA/SMK dan mahasiswa aktif. Sertakan fotokopi kartu pelajar atau KTM.</div></div>
+      <div class="syarat-item"><div class="syarat-num">2</div><div class="syarat-text"><strong>Usia 15 – 25 Tahun</strong>Sertakan fotokopi KTP atau Kartu Keluarga sebagai bukti usia.</div></div>
+      <div class="syarat-item"><div class="syarat-num">3</div><div class="syarat-text"><strong>Kondisi Kesehatan Baik</strong>Melampirkan surat keterangan sehat dari dokter atau puskesmas.</div></div>
+      <div class="syarat-item"><div class="syarat-num">4</div><div class="syarat-text"><strong>Izin Orang Tua / Wali</strong>Wajib untuk calon anggota di bawah 18 tahun.</div></div>
+      <div class="syarat-item"><div class="syarat-num">5</div><div class="syarat-text"><strong>Pas Foto Terbaru</strong>2 lembar foto ukuran 3×4 dengan latar belakang merah.</div></div>
+      <div class="syarat-item"><div class="syarat-num">6</div><div class="syarat-text"><strong>Mengikuti Orientasi Awal</strong>Wajib hadir pada sesi orientasi setelah seleksi administrasi lolos.</div></div>
+      <div class="syarat-item"><div class="syarat-num">7</div><div class="syarat-text"><strong>Iuran Pendaftaran</strong>Detail disampaikan saat sesi orientasi.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="stag">FAQ</div>
+  <h2>PERTANYAAN<br><span class="ac">UMUM</span></h2>
+  <p class="lead">Temukan jawaban atas pertanyaan yang sering ditanyakan calon anggota baru.</p>
+  <div class="faq-list reveal">
+    <div class="faq-item"><div class="faq-q">Siapa saja yang bisa mendaftar di Karmapala?<span class="faq-ic">+</span></div><div class="faq-a">Pendaftaran terbuka untuk pelajar SMA/SMK dan mahasiswa yang memiliki minat terhadap alam dan kegiatan outdoor. Tidak perlu pengalaman sebelumnya!</div></div>
+    <div class="faq-item"><div class="faq-q">Apa saja kegiatan rutin Karmapala?<span class="faq-ic">+</span></div><div class="faq-a">Kami rutin mengadakan pendakian, latihan panjat tebing, arung jeram, bakti sosial, penanaman pohon, serta pelatihan kepemimpinan dan navigasi alam.</div></div>
+    <div class="faq-item"><div class="faq-q">Apakah ada iuran keanggotaan?<span class="faq-ic">+</span></div><div class="faq-a">Terdapat iuran bulanan yang terjangkau untuk mendanai kegiatan, peralatan, dan operasional. Detail diinformasikan saat orientasi.</div></div>
+    <div class="faq-item"><div class="faq-q">Bagaimana proses seleksi anggota baru?<span class="faq-ic">+</span></div><div class="faq-a">Setelah mengisi formulir, kamu diundang ke sesi orientasi dan seleksi ringan. Kami menilai semangat dan motivasimu!</div></div>
+    <div class="faq-item"><div class="faq-q">Kapan pendaftaran dibuka setiap tahun?<span class="faq-ic">+</span></div><div class="faq-a">Setiap awal tahun ajaran baru dan kadang ada penerimaan khusus di pertengahan tahun. Pantau Instagram kami untuk info terbaru!</div></div>
+    <div class="faq-item"><div class="faq-q">Apakah ada peralatan yang harus disiapkan sendiri?<span class="faq-ic">+</span></div><div class="faq-a">Peralatan utama tersedia di inventaris Karmapala. Untuk barang personal kami akan memberi panduan yang tepat.</div></div>
+  </div>
+</section>
+
+<!-- KONTAK -->
+<section id="kontak" class="alt">
+  <div class="stag">Kontak</div>
+  <h2>HUBUNGI <span class="ac">KAMI</span></h2>
+  <span class="section-line"></span>
+  <p class="lead">Ada pertanyaan? Jangan ragu untuk menghubungi kami.</p>
+
+  <div class="kontak-grid reveal-stagger">
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/6289507587025" target="_blank" rel="noopener" class="kontak-card card-3d">
+      <div class="kontak-ic k-wa">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.41A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" fill="#25D366" fill-opacity=".18"/>
+          <path d="M17.04 14.384c-.274-.137-1.621-.8-1.872-.891-.251-.092-.434-.137-.617.137-.183.274-.708.891-.868 1.074-.16.183-.32.206-.594.069-.274-.137-1.156-.426-2.202-1.358-.813-.726-1.362-1.622-1.522-1.896-.16-.274-.017-.422.12-.559.123-.123.274-.32.411-.48.137-.16.183-.274.274-.457.092-.183.046-.343-.023-.48-.069-.137-.617-1.486-.845-2.034-.222-.534-.449-.462-.617-.47-.16-.007-.343-.009-.526-.009a1.01 1.01 0 00-.732.343c-.251.274-.96.937-.96 2.286s.983 2.651 1.12 2.834c.137.183 1.935 2.952 4.686 4.141.655.283 1.166.452 1.564.579.657.209 1.255.18 1.727.109.527-.079 1.621-.663 1.85-1.303.228-.64.228-1.189.16-1.303-.069-.114-.251-.183-.525-.32z" fill="#25D366"/>
+        </svg>
+      </div>
+      <div class="kontak-info">
+        <div class="kontak-lbl">WhatsApp</div>
+        <div class="kontak-val">+62 895-0758-7025</div>
+        <div class="kontak-sub">Hubungi kami via WhatsApp</div>
+      </div>
+      <span class="kontak-arr">›</span>
+    </a>
+
+    <!-- Instagram -->
+    <a href="instagram://user?username=humas_karmapala" onclick="setTimeout(function(){window.open('https://instagram.com/humas_karmapala','_blank')},1000);return true;" class="kontak-card card-3d">
+      <div class="kontak-ic k-ig">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#igGrad)" fill-opacity=".22"/>
+          <defs>
+            <linearGradient id="igGrad" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#f9ce34"/><stop offset=".35" stop-color="#ee2a7b"/><stop offset="1" stop-color="#6228d7"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="url(#igGrad2)" stroke-width="1.5" fill="none"/>
+          <defs>
+            <linearGradient id="igGrad2" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#f9ce34"/><stop offset=".35" stop-color="#ee2a7b"/><stop offset="1" stop-color="#6228d7"/>
+            </linearGradient>
+          </defs>
+          <circle cx="12" cy="12" r="4" stroke="url(#igGrad3)" stroke-width="1.5" fill="none"/>
+          <defs>
+            <linearGradient id="igGrad3" x1="8" y1="16" x2="16" y2="8" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#f9ce34"/><stop offset=".5" stop-color="#ee2a7b"/><stop offset="1" stop-color="#6228d7"/>
+            </linearGradient>
+          </defs>
+          <circle cx="17.5" cy="6.5" r="1" fill="#ee2a7b"/>
+        </svg>
+      </div>
+      <div class="kontak-info">
+        <div class="kontak-lbl">Instagram</div>
+        <div class="kontak-val">@humas_karmapala</div>
+        <div class="kontak-sub">Follow untuk info &amp; update terbaru</div>
+      </div>
+      <span class="kontak-arr">›</span>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:karmapala.official@gmail.com" class="kontak-card card-3d">
+      <div class="kontak-ic k-em">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="4" width="20" height="16" rx="3" fill="rgba(100,150,255,0.15)" stroke="rgba(100,150,255,0.6)" stroke-width="1.5"/>
+          <path d="M2 7l10 7 10-7" stroke="rgba(100,150,255,0.85)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="kontak-info">
+        <div class="kontak-lbl">Email</div>
+        <div class="kontak-val">karmapala.official@gmail.com</div>
+        <div class="kontak-sub">Untuk keperluan formal &amp; kerjasama</div>
+      </div>
+      <span class="kontak-arr">›</span>
+    </a>
+
+    <!-- Lokasi -->
+    <div class="kontak-card card-3d" style="cursor:default;flex-direction:column;align-items:flex-start;gap:10px">
+      <div style="display:flex;align-items:center;gap:14px;width:100%">
+        <div class="kontak-ic k-loc">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8.686 2 6 4.686 6 8c0 5.25 6 14 6 14s6-8.75 6-14c0-3.314-2.686-6-6-6z" fill="rgba(255,220,50,0.15)" stroke="rgba(255,220,50,0.7)" stroke-width="1.5"/>
+            <circle cx="12" cy="8" r="2.5" fill="rgba(255,220,50,0.8)"/>
+          </svg>
+        </div>
+        <div class="kontak-info">
+          <div class="kontak-lbl">Sekretariat</div>
+          <div class="kontak-val">Jl. Pelajar No. 17, Gedung B</div>
+          <div class="kontak-sub">Jl. Pelajar No. 17, Gedung B</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta-join" role="complementary" aria-label="Ajakan bergabung">
+  <div class="cta-scene" aria-hidden="true"></div>
+  <div class="cta-pulse-ring" aria-hidden="true"></div>
+  <div class="cta-pulse-ring" aria-hidden="true"></div>
+  <div class="cta-pulse-ring" aria-hidden="true"></div>
+  <canvas class="cta-stars" id="ctaStarsCanvas" aria-hidden="true"></canvas>
+  <div class="cta-horizon" aria-hidden="true"></div>
+  <div class="cta-content">
+    <div class="cta-badge reveal-scale"><span style="width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--orange);animation:blink 1.4s ease infinite;display:inline-block"></span>PENDAFTARAN TERBUKA</div>
+    <div class="cta-headline reveal">SIAP UNTUK<br><span style="color:var(--orange);text-shadow:0 0 40px var(--oglow),0 0 80px rgba(255,107,0,0.3)">BERGABUNG?</span></div>
+    <p class="cta-sub reveal" style="transition-delay:.1s">Ribuan langkah petualangan menunggumu. Jadilah bagian dari Karmapala dan tulis sejarahmu bersama kami.</p>
+    <div class="cta-btns reveal" style="transition-delay:.2s">
+      <a href="https://forms.gle/yourGoogleFormLink" target="_blank" class="btn-p" style="font-size:15px;padding:17px 30px">Daftar Sekarang — Gratis!</a>
+      <a href="https://wa.me/6289507587025?text=Halo%20Karmapala%2C%20saya%20ingin%20bergabung!" target="_blank" class="btn-s">Chat Langsung dengan Kami</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <img src="logo.jpg" class="footer-logo-img" alt="Logo Karmapala" width="40" height="40" loading="lazy" decoding="async">
+    <div class="footer-divider"></div>
+    <div class="footer-text">
+      <span>Pencinta Alam</span>
+      <span>dan Penempuh Rimba</span>
+    </div>
+  </div>
+  <div class="footer-nav">
+    <a onclick="sgo(event,'beranda')">Beranda</a>
+    <a onclick="sgo(event,'tentang')">Tentang</a>
+    <a onclick="sgo(event,'kegiatan')">Kegiatan</a>
+    <a onclick="sgo(event,'galeri')">Galeri</a>
+    <a onclick="sgo(event,'jurnal')">Jurnal</a>
+    <a onclick="sgo(event,'pendaftaran')">Daftar</a>
+    <a onclick="sgo(event,'kontak')">Kontak</a>
+  </div>
+  <div class="footer-div"></div>
+  <div class="footer-copy">© 2025 <span>Karmapala</span> — Alam Tempat Kita Belajar</div>
+</footer>
+
+<script>
+// ===== DATA =====
+const lbData = {
+  kegiatan:[
+    {em:'🏔️',title:'Pendakian Gunung',desc:'Ekspedisi ke puncak-puncak tertinggi Nusantara. Tim solid Karmapala menembus batas dan membuktikan tekad yang kuat.',tag:'Ekspedisi'},
+    {em:'🌊',title:'Arung Jeram',desc:'Menaklukkan derasnya sungai dan menguji keberanian tim di arus deras Sungai Citatih.',tag:'Arung Jeram'},
+    {em:'🌱',title:'Penanaman Pohon',desc:'Aksi nyata penghijauan — menanam 500+ pohon di wilayah kritis demi kelestarian lingkungan hidup.',tag:'Konservasi'},
+    {em:'🏕️',title:'Kemah Alam',desc:'Berbaur dengan alam, mempererat ikatan persaudaraan anggota dalam camping bersama.',tag:'Kemah'},
+    {em:'🧗',title:'Rock Climbing',desc:'Latihan panjat tebing rutin untuk meningkatkan kekuatan fisik, skill teknis, dan mental baja.',tag:'Climbing'},
+    {em:'🗺️',title:'Orientering',desc:'Navigasi medan menggunakan peta dan kompas secara langsung di lapangan yang menantang.',tag:'Navigasi'},
+    {em:'🚣',title:'Kayaking',desc:'Menjelajahi sungai dan danau menggunakan kayak bersama anggota — seru dan menantang!',tag:'Kayaking'},
+    {em:'🦅',title:'Paralayang',desc:'Terbang bebas di atas alam terbuka — pengalaman tak terlupakan bagi anggota Karmapala.',tag:'Paralayang'},
+    {em:'🌄',title:'Sunrise Camping',desc:'Bermalam di puncak dan menyaksikan matahari terbit bersama — momen magis yang membekas seumur hidup.',tag:'Camping'},
+    {em:'♻️',title:'Bersih Pantai',desc:'Aksi bersih pantai dan sungai untuk menjaga ekosistem alam tetap lestari bagi generasi mendatang.',tag:'Lingkungan'},
+  ],
+  galeri:[
+    {em:'🏔️',title:'Ekspedisi Puncak 2023',desc:'Pendakian akbar tim Karmapala ke puncak-puncak tertinggi Nusantara. Momen bersejarah yang mempererat kebersamaan seluruh anggota.',tag:'Ekspedisi'},
+    {em:'🌊',title:'Arung Jeram – Sungai Citatih',desc:'Menaklukkan derasnya Sungai Citatih bersama tim solid Karmapala. Adrenalin tinggi, kebersamaan makin kuat!',tag:'Arung Jeram'},
+    {em:'🌱',title:'Program Tanam 500 Pohon',desc:'Aksi nyata konservasi alam — menanam 500 pohon di wilayah kritis sebagai wujud kepedulian Karmapala.',tag:'Konservasi'},
+    {em:'🧗',title:'Latihan Rock Climbing',desc:'Sesi latihan panjat tebing rutin untuk membangun kekuatan fisik dan mental anggota Karmapala.',tag:'Rock Climbing'},
+    {em:'🏕️',title:'Kemah Anggota 2024',desc:'Bermalam di alam terbuka bersama seluruh anggota — mempererat persaudaraan dan melatih survival skill.',tag:'Kemah'},
+    {em:'♻️',title:'Aksi Bersih Pantai',desc:'Gerakan peduli lingkungan — membersihkan sampah di pesisir pantai untuk menjaga ekosistem laut.',tag:'Aksi Lingkungan'},
+    {em:'🌌',title:'Camping Milkyway',desc:'Bermalam di bawah langit penuh bintang dan galaksi Bimasakti. Pengalaman tak terlupakan bagi seluruh anggota Karmapala.',tag:'Kemah'},
+    {em:'🌄',title:'Sunrise Trek',desc:'Mendaki dini hari untuk menyambut matahari terbit dari ketinggian. Panorama emas yang merawat jiwa petualang.',tag:'Hiking'},
+    {em:'⛰️',title:'Eksplorasi Hidden Canyon',desc:'Penjelajahan jurang tersembunyi yang belum banyak diketahui publik. Divisi eksplorasi membuka jalur baru.',tag:'Eksplorasi'},
+    {em:'🚣',title:'Kayaking Adventure',desc:'Menjelajahi sungai dan danau menggunakan kayak bersama anggota — melatih keseimbangan dan koordinasi tim.',tag:'Kayaking'},
+    {em:'🔥',title:'Api Unggun Malam',desc:'Tradisi api unggun sebagai momen refleksi dan penguatan ikatan antar anggota. Cerita dan nyanyian bersama di bawah bintang.',tag:'Kemah'},
+    {em:'🦋',title:'Konservasi Fauna',desc:'Program pemantauan satwa liar dan flora endemik bersama BKSDA. Karmapala aktif dalam pelestarian ekosistem.',tag:'Konservasi'},
+    {em:'🌅',title:'Golden Hour Ekspedisi',desc:'Dokumentasi sinematik perjalanan ekspedisi saat golden hour. Momen visual terbaik yang diabadikan tim dokumentasi Karmapala.',tag:'Dokumentasi'},
+    {em:'🎽',title:'Pelatihan Diklat 2024',desc:'Program pendidikan dan latihan intensif untuk anggota baru. Membangun fondasi skill, mental, dan etika pecinta alam.',tag:'Diklat'},
+    {em:'🏆',title:'Podium Juara Nasional',desc:'Momen bersejarah saat tim Karmapala meraih podium dalam kompetisi lintas alam nasional 2023.',tag:'Prestasi'},
+    {em:'🌊',title:'Kompetisi Arung Jeram Nasional 2024',desc:'Tim Karmapala berhasil meraih posisi terbaik dalam kompetisi arung jeram tingkat nasional 2024.',tag:'Kompetisi'},
+    {em:'🗺️',title:'Orientering Championship',desc:'Kompetisi navigasi medan menggunakan peta dan kompas. Anggota Karmapala membuktikan kemampuan teknis di lapangan.',tag:'Navigasi'},
+    {em:'🦅',title:'Paralayang Perdana',desc:'Pengalaman terbang bebas di atas alam terbuka. Program paralayang perdana yang disambut antusias oleh anggota.',tag:'Paralayang'},
+  ],
+  prestasi:[
+    {em:'🥇',title:'Juara 1 Lintas Alam Nasional',desc:'Kompetisi Lintas Alam Nasional 2023 kategori umum. Prestasi membanggakan yang mengharumkan nama daerah.',tag:'Juara Nasional'},
+    {em:'🏆',title:'Ekspedisi Terbaik Provinsi',desc:'Penghargaan Ekspedisi Terbaik Provinsi tahun 2022 atas perencanaan dan pelaksanaan yang luar biasa.',tag:'Provinsi 2022'},
+    {em:'🎖️',title:'SAR Award',desc:'Penghargaan kontribusi terbaik dalam kegiatan Search and Rescue daerah — aksi nyata membela jiwa sesama.',tag:'SAR'},
+    {em:'🌏',title:'Eco-Action Award',desc:'Pelopor aksi lingkungan tingkat regional 2021 atas program penanaman dan bersih pantai yang masif.',tag:'Lingkungan 2021'},
+    {em:'🧭',title:'Juara Orientering',desc:'Pemenang kompetisi navigasi alam terbuka tingkat kota — membuktikan keahlian teknis anggota Karmapala.',tag:'Navigasi'},
+    {em:'⛰️',title:'Pendaki Muda Berprestasi',desc:'Penghargaan spesial untuk anggota termuda yang sukses menyelesaikan ekspedisi puncak penuh.',tag:'Individual'},
+    {em:'🥈',title:'Juara 2 Panjat Tebing',desc:'Runner-up kompetisi panjat tebing se-Jawa Barat 2022 — pengakuan kelas regional atas kemampuan teknis.',tag:'Jawa Barat 2022'},
+    {em:'🎗️',title:'Komunitas Terbaik',desc:'Komunitas pecinta alam terbaik versi Dinas Lingkungan Hidup atas program konservasi yang berkelanjutan.',tag:'Komunitas'},
+    {em:'🌟',title:'Outstanding Team Award',desc:'Penghargaan tim luar biasa dari Federasi Pecinta Alam Indonesia atas kontribusi dan solidaritas tinggi.',tag:'Federasi'},
+    {em:'🛡️',title:'Keselamatan Terbaik',desc:'Rekor membanggakan: nol insiden dalam 5 tahun kegiatan lapangan berturut-turut. Safety first selalu!',tag:'Safety Record'},
+  ],
+  struktur:[
+    {em:'🧑‍💼',title:'Ahmad Fauzan — Ketua Umum',desc:'Ketua Umum Karmapala periode 2024–2026. Memimpin organisasi dengan visi kuat dan kepemimpinan yang inspiratif.',tag:'Ketua Umum'},
+    {em:'👩‍💼',title:'Siti Rahayu — Wakil Ketua',desc:'Wakil Ketua & Koordinator Lapangan. Memastikan setiap kegiatan berjalan lancar dan aman.',tag:'Wakil Ketua'},
+    {em:'📋',title:'Rizky Pratama — Sekretaris',desc:'Sekretaris Umum & Administrasi Organisasi. Tulang punggung dokumentasi dan korespondensi Karmapala.',tag:'Sekretaris'},
+    {em:'💰',title:'Dewi Anggraini — Bendahara',desc:'Bendahara Umum & Keuangan Organisasi. Menjaga keuangan tetap sehat dan transparan.',tag:'Bendahara'},
+    {em:'📣',title:'Budi Santoso — Humas',desc:'Kepala Divisi Humas & Media Sosial. Wajah Karmapala di dunia digital dan publik.',tag:'Humas'},
+    {em:'🎓',title:'Nurul Hidayah — Diklat',desc:'Kepala Divisi Pendidikan & Pelatihan. Merancang kurikulum pelatihan anggota yang komprehensif.',tag:'Diklat'},
+    {em:'🏕️',title:'Hendra Saputra — Lapangan',desc:'Koordinator Kegiatan Lapangan & Ekspedisi. Mastermind di balik setiap petualangan Karmapala.',tag:'Lapangan'},
+    {em:'🩺',title:'Rani Kusuma — Medis',desc:'Kepala Divisi Kesehatan & Keselamatan. Memastikan setiap anggota terlindungi selama kegiatan.',tag:'Medis'},
+    {em:'📸',title:'Fajar Maulana — Dokumentasi',desc:'Kepala Divisi Dokumentasi & Publikasi. Mengabadikan setiap momen berharga perjalanan Karmapala.',tag:'Dokumentasi'},
+    {em:'🌱',title:'Yuli Astuti — Lingkungan',desc:'Kepala Divisi Lingkungan & Konservasi. Pejuang hijau yang memimpin aksi nyata pelestarian alam.',tag:'Lingkungan'},
+  ],
+};
+
+// ===== JURNAL DATA =====
+const jurnalData = [
+  {
+    judul:'Keanekaragaman Hayati Flora di Kawasan Pegunungan Jawa Barat: Studi Kasus Ekspedisi Karmapala 2023',
+    penulis:'Ahmad Fauzan, Nurul Hidayah, Yuli Astuti',
+    abstrak:'Penelitian ini mengkaji keanekaragaman jenis flora yang ditemukan selama ekspedisi pendakian di tiga puncak utama Jawa Barat. Sebanyak 127 spesies tanaman berhasil diidentifikasi, termasuk 12 spesies endemik yang terancam punah.',
+    tahun:'2023', volume:'Vol. 6, No. 2', kategori:'konservasi',
+    link:'https://drive.google.com/file/d/your-file-id-1/view'
+  },
+  {
+    judul:'Analisis Kualitas Air Sungai Citatih Pasca Kegiatan Arung Jeram: Implikasi Ekologis dan Rekomendasi Pengelolaan',
+    penulis:'Rani Kusuma, Hendra Saputra, Budi Santoso',
+    abstrak:'Studi ini mengevaluasi parameter kualitas air Sungai Citatih sebelum dan sesudah kegiatan arung jeram intensif. Hasil menunjukkan peningkatan kekeruhan sementara namun tidak melampaui ambang baku mutu lingkungan.',
+    tahun:'2023', volume:'Vol. 6, No. 1', kategori:'lingkungan',
+    link:'https://drive.google.com/file/d/your-file-id-2/view'
+  },
+  {
+    judul:'Pemetaan Jalur Pendakian Gunung Menggunakan GPS dan GIS: Aplikasi untuk Keselamatan Pendaki',
+    penulis:'Rizky Pratama, Fajar Maulana',
+    abstrak:'Penelitian ini mengembangkan sistem pemetaan digital jalur pendakian berbasis GPS dan GIS untuk mendukung keselamatan pendaki. Peta interaktif yang dihasilkan mencakup titik bahaya, sumber air, dan pos peristirahatan.',
+    tahun:'2022', volume:'Vol. 5, No. 2', kategori:'geografi',
+    link:'https://drive.google.com/file/d/your-file-id-3/view'
+  },
+  {
+    judul:'Teknik Navigasi Darat Tradisional vs Modern: Efektivitas Orientering dalam Kondisi Medan Ekstrem',
+    penulis:'Ahmad Fauzan, Hendra Saputra',
+    abstrak:'Perbandingan komprehensif antara teknik navigasi tradisional (peta-kompas) dan modern (GPS digital) dalam kondisi medan pegunungan yang ekstrem. Studi menemukan bahwa kombinasi keduanya memberikan akurasi navigasi terbaik.',
+    tahun:'2022', volume:'Vol. 5, No. 1', kategori:'survival',
+    link:'https://drive.google.com/file/d/your-file-id-4/view'
+  },
+  {
+    judul:'Program Penanaman 500 Pohon Karmapala: Evaluasi Tingkat Keberhasilan dan Dampak Ekosistem',
+    penulis:'Yuli Astuti, Nurul Hidayah, Siti Rahayu',
+    abstrak:'Laporan evaluasi komprehensif program penanaman pohon yang dilaksanakan Karmapala di lahan kritis. Tingkat keberhasilan hidup pohon mencapai 84%, dengan dampak positif signifikan terhadap cadangan air tanah dan keanekaragaman serangga.',
+    tahun:'2021', volume:'Vol. 4, No. 2', kategori:'konservasi',
+    link:'https://drive.google.com/file/d/your-file-id-5/view'
+  },
+  {
+    judul:'Studi Psikososial: Pengaruh Kegiatan Alam Terbuka terhadap Pembentukan Karakter Remaja Anggota Organisasi Pecinta Alam',
+    penulis:'Siti Rahayu, Dewi Anggraini',
+    abstrak:'Penelitian kuantitatif-kualitatif ini mengkaji dampak kegiatan alam terbuka terhadap dimensi psikososial remaja. Hasil menunjukkan peningkatan signifikan dalam aspek kepemimpinan, empati, dan resiliensi diri peserta.',
+    tahun:'2021', volume:'Vol. 4, No. 1', kategori:'sosial',
+    link:'https://drive.google.com/file/d/your-file-id-6/view'
+  },
+  {
+    judul:'Protokol First Aid dan Manajemen Evakuasi Korban di Daerah Terpencil: Panduan Berbasis Pengalaman Lapangan Karmapala',
+    penulis:'Rani Kusuma, Ahmad Fauzan, Hendra Saputra',
+    abstrak:'Penyusunan protokol standar penanganan darurat medis dan evakuasi korban di daerah terpencil berdasarkan akumulasi pengalaman operasi SAR Karmapala. Mencakup 14 skenario darurat dengan prosedur respons terstandarisasi.',
+    tahun:'2020', volume:'Vol. 3, No. 2', kategori:'survival',
+    link:'https://drive.google.com/file/d/your-file-id-7/view'
+  },
+  {
+    judul:'Dampak Ecotourism Terhadap Kesejahteraan Masyarakat Lokal di Sekitar Kawasan Hutan Lindung',
+    penulis:'Budi Santoso, Yuli Astuti, Rizky Pratama',
+    abstrak:'Analisis dampak pengembangan ekowisata berbasis komunitas terhadap kondisi ekonomi dan sosial masyarakat lokal di sekitar kawasan hutan lindung yang menjadi lokasi kegiatan Karmapala.',
+    tahun:'2020', volume:'Vol. 3, No. 1', kategori:'sosial',
+    link:'https://drive.google.com/file/d/your-file-id-8/view'
+  },
+];
+
+let showAllJurnal = false;
+const JURNAL_INITIAL = 2;
+
+function renderJurnal() {
+  const grid = document.getElementById('jurnalGrid');
+  const empty = document.getElementById('jurnalEmpty');
+  const moreWrap = document.getElementById('jurnalMoreWrap');
+  const moreLabel = document.getElementById('jurnalMoreLabel');
+  const filtered = jurnalData;
+  if (!filtered.length) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    moreWrap.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  const visible = showAllJurnal ? filtered : filtered.slice(0, JURNAL_INITIAL);
+  grid.innerHTML = visible.map(j => `
+    <div class="jurnal-card" onclick="window.open('${j.link}','_blank')">
+      <div class="jc-header">
+        <div class="jc-icon">
+          <div class="jc-icon-lines">
+            <div class="jc-icon-line"></div>
+            <div class="jc-icon-line"></div>
+            <div class="jc-icon-line"></div>
+          </div>
+          <span>PDF</span>
+        </div>
+        <div class="jc-meta">
+          <div class="jc-type">${j.kategori.toUpperCase()}</div>
+          <div class="jc-title">${j.judul}</div>
+          <div class="jc-authors">${j.penulis}</div>
+        </div>
+      </div>
+      <div class="jc-body"><div class="jc-abstract">${j.abstrak}</div></div>
+      <div class="jc-footer">
+        <div class="jc-info">
+          <span class="jc-badge jb-year">${j.tahun}</span>
+          <span class="jc-badge jb-vol">${j.volume}</span>
+        </div>
+        <span class="jc-open">Buka &rsaquo;</span>
+      </div>
+    </div>
+  `).join('');
+  const hasMore = filtered.length > JURNAL_INITIAL;
+  moreWrap.style.display = hasMore ? 'block' : 'none';
+  if (hasMore) {
+    const remaining = filtered.length - JURNAL_INITIAL;
+    moreLabel.innerHTML = showAllJurnal
+      ? 'Sembunyikan'
+      : `Lihat ${remaining} Jurnal Lainnya`;
+  }
+}
+
+function showMoreJurnal() {
+  showAllJurnal = !showAllJurnal;
+  renderJurnal();
+  if (!showAllJurnal) document.getElementById('jurnal').scrollIntoView({behavior:'smooth'});
+}
+
+// ===== LIGHTBOX (Instagram-style) =====
+let lbDataset = [];
+let lbIdx = 0;
+
+// BG classes per tag
+const bgMap = {
+  'Ekspedisi':'bg-hike','Arung Jeram':'bg-water','Konservasi':'bg-eco',
+  'Rock Climbing':'bg-climb','Kemah':'bg-camp','Camping':'bg-camp',
+  'Lingkungan':'bg-eco','Aksi Lingkungan':'bg-eco','Navigasi':'bg-climb',
+  'Kayaking':'bg-water','Paralayang':'bg-hike','SAR':'bg-climb',
+  'Komunitas':'bg-camp','Federasi':'bg-hike','Safety Record':'bg-climb',
+  'Individual':'bg-hike','Dokumentasi':'bg-camp','Medis':'bg-climb',
+  'Lapangan':'bg-hike','Diklat':'bg-camp','Humas':'bg-eco',
+  'Bendahara':'bg-camp','Sekretaris':'bg-climb','Wakil Ketua':'bg-hike',
+  'Ketua Umum':'bg-hike',
+};
+const bgCss = {
+  'bg-hike':'background:linear-gradient(145deg,#0d1a10,#162b18)',
+  'bg-water':'background:linear-gradient(145deg,#060d1a,#0c1a2e)',
+  'bg-eco':'background:linear-gradient(145deg,#081208,#112211)',
+  'bg-climb':'background:linear-gradient(145deg,#0f0f0f,#1c1c1c)',
+  'bg-camp':'background:linear-gradient(145deg,#1a0d04,#2e1a08)',
+};
+
+function openLB(type, i) {
+  if (!lbData[type]) return;
+  lbDataset = lbData[type];
+  lbIdx = Math.max(0, Math.min(i, lbDataset.length - 1));
+  _buildSlides();
+  _buildDots();
+  _gotoSlide(lbIdx, false);
+  document.getElementById('lb').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLB() {
+  document.getElementById('lb').classList.remove('on');
+  document.getElementById('lbSheet').style.transform = '';
+  document.getElementById('lbSheet').style.transition = '';
+  if (!menuOpen && !document.getElementById('vlb').classList.contains('on')) {
+    document.body.style.overflow = '';
+  }
+}
+
+function _buildSlides() {
+  const track = document.getElementById('lbTrack');
+  track.innerHTML = lbDataset.map(d => {
+    const bgKey = bgMap[d.tag] || 'bg-camp';
+    const style = bgCss[bgKey] || '';
+    return `<div class="lb-slide"><div class="lb-slide-img" style="${style}">${d.em}</div></div>`;
+  }).join('');
+}
+
+function _buildDots() {
+  document.getElementById('lbDots').innerHTML = lbDataset.map((_, i) =>
+    `<div class="lb-d" data-i="${i}"></div>`
+  ).join('');
+}
+
+function _updateInfo(idx) {
+  const d = lbDataset[idx];
+  document.getElementById('lbTitle').textContent = d.title;
+  document.getElementById('lbDesc').textContent = d.desc;
+  document.getElementById('lbMeta').innerHTML = `<span class="lb-tag">${d.tag}</span>`;
+  document.querySelectorAll('.lb-d').forEach((dot, i) => dot.classList.toggle('on', i === idx));
+  document.getElementById('lbPrev').classList.toggle('hide', idx === 0);
+  document.getElementById('lbNext').classList.toggle('hide', idx === lbDataset.length - 1);
+}
+
+function _gotoSlide(idx, animate = true) {
+  const track = document.getElementById('lbTrack');
+  if (!animate) track.classList.add('no-anim');
+  track.style.transform = `translateX(-${idx * 100}%)`;
+  if (!animate) requestAnimationFrame(() => track.classList.remove('no-anim'));
+  lbIdx = idx;
+  _updateInfo(idx);
+}
+
+function lbStep(dir) {
+  const next = lbIdx + dir;
+  if (next < 0 || next >= lbDataset.length) return;
+  _gotoSlide(next);
+}
+
+// Arrow buttons
+document.getElementById('lbPrev').addEventListener('click', () => lbStep(-1));
+document.getElementById('lbNext').addEventListener('click', () => lbStep(1));
+
+// Backdrop tap to close
+document.getElementById('lb-backdrop').addEventListener('click', closeLB);
+document.getElementById('lbCloseBtn').addEventListener('click', closeLB);
+
+// Touch swipe on carousel
+const _car = document.getElementById('lbCarousel');
+let _tx0 = 0, _ty0 = 0, _swiping = false, _swipeDx = 0;
+
+_car.addEventListener('touchstart', e => {
+  _tx0 = e.touches[0].clientX; _ty0 = e.touches[0].clientY;
+  _swiping = false; _swipeDx = 0;
+}, {passive:true});
+
+_car.addEventListener('touchmove', e => {
+  const dx = e.touches[0].clientX - _tx0;
+  const dy = e.touches[0].clientY - _ty0;
+  if (!_swiping && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6) _swiping = true;
+  if (_swiping) {
+    _swipeDx = dx;
+    const track = document.getElementById('lbTrack');
+    track.classList.add('no-anim');
+    track.style.transform = `translateX(calc(-${lbIdx * 100}% + ${dx}px))`;
+  }
+}, {passive:true});
+
+_car.addEventListener('touchend', () => {
+  if (!_swiping) return;
+  _swiping = false;
+  const track = document.getElementById('lbTrack');
+  track.classList.remove('no-anim');
+  const thresh = _car.offsetWidth * 0.25;
+  if (_swipeDx < -thresh && lbIdx < lbDataset.length - 1) _gotoSlide(lbIdx + 1);
+  else if (_swipeDx > thresh && lbIdx > 0) _gotoSlide(lbIdx - 1);
+  else _gotoSlide(lbIdx);
+  _swipeDx = 0;
+});
+
+// Mouse drag (desktop)
+let _mx0 = 0, _mdown = false, _mdx = 0;
+_car.addEventListener('mousedown', e => { _mdown = true; _mx0 = e.clientX; _mdx = 0; e.preventDefault(); });
+document.addEventListener('mousemove', e => {
+  if (!_mdown) return;
+  _mdx = e.clientX - _mx0;
+  const track = document.getElementById('lbTrack');
+  track.classList.add('no-anim');
+  track.style.transform = `translateX(calc(-${lbIdx * 100}% + ${_mdx}px))`;
+});
+document.addEventListener('mouseup', e => {
+  if (!_mdown) return;
+  _mdown = false;
+  const track = document.getElementById('lbTrack');
+  track.classList.remove('no-anim');
+  const thresh = _car.offsetWidth * 0.2;
+  if (_mdx < -thresh && lbIdx < lbDataset.length - 1) _gotoSlide(lbIdx + 1);
+  else if (_mdx > thresh && lbIdx > 0) _gotoSlide(lbIdx - 1);
+  else _gotoSlide(lbIdx);
+  _mdx = 0;
+});
+
+// Tap outside (backdrop) to close — already handled via lb-backdrop click above
+
+
+// prevent lightbox open on scroll - use per-track state, not global
+document.querySelectorAll('.slider-track').forEach(track => {
+  let _tStartX = 0, _tStartY = 0;
+  // Higher threshold on touch = fewer accidental opens
+  const MOVE_THRESHOLD = 10;
+  track.addEventListener('touchstart', e => {
+    _tStartX = e.touches[0].clientX;
+    _tStartY = e.touches[0].clientY;
+    track._touchMoved = false;
+  }, {passive:true});
+  track.addEventListener('touchmove', e => {
+    if (
+      Math.abs(e.touches[0].clientX - _tStartX) > MOVE_THRESHOLD ||
+      Math.abs(e.touches[0].clientY - _tStartY) > MOVE_THRESHOLD
+    ) {
+      track._touchMoved = true;
+    }
+  }, {passive:true});
+  track.addEventListener('touchend', () => {
+    setTimeout(() => { track._touchMoved = false; }, 100); // slightly longer debounce
+  }, {passive:true});
+});
+document.querySelectorAll('.slide-card').forEach(card => {
+  card.addEventListener('click', e => {
+    const track = card.closest('.slider-track');
+    if (track && track._touchMoved) { e.stopImmediatePropagation(); }
+  });
+});
+
+// ===== LOADING =====
+(function(){
+  const scr = document.getElementById('loadingScreen');
+  if (!scr) return;
+  const MIN_MS = 3000; // 3 detik minimum display time
+  const MAX_MS = 4500; // hard cap in case load stalls
+  const startTime = Date.now();
+
+  function hide() {
+    const elapsed = Date.now() - startTime;
+    const wait = Math.max(0, MIN_MS - elapsed);
+    setTimeout(() => {
+      scr.classList.add('hidden');
+      // Remove from DOM after transition to free memory
+      setTimeout(() => scr.remove(), 700);
+    }, wait);
+  }
+
+  // Hard cap — always hide
+  const hardCap = setTimeout(() => scr.classList.add('hidden'), MAX_MS);
+
+  if (document.readyState === 'complete') {
+    clearTimeout(hardCap);
+    hide();
+  } else {
+    window.addEventListener('load', () => { clearTimeout(hardCap); hide(); }, {once:true});
+  }
+})();
+
+// ===== INTERACTIVE CURSOR GLOW (desktop only) =====
+(function(){
+  const glow = document.getElementById('cursorGlow');
+  const dot  = document.getElementById('cursorDot');
+  if (!glow || !dot) return;
+  // Check on load AND on pointer type change (e.g. tablet with keyboard)
+  const coarseMedia = window.matchMedia('(pointer:coarse)');
+  if (coarseMedia.matches) return;
+  coarseMedia.addEventListener('change', e => {
+    if (e.matches) { glow.style.display = 'none'; dot.style.display = 'none'; }
+  });
+
+  let mx = -500, my = -500, gx = -500, gy = -500;
+  let isHovering = false;
+  let raf;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    dot.style.opacity = '1';
+    glow.style.opacity = '1';
+  });
+
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    glow.style.opacity = '0';
+  });
+
+  // Grow dot on interactive elements
+  const interactiveSelector = 'a,button,[onclick],.slide-card,.gi,.kontak-card,.faq-q,.card-3d';
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest(interactiveSelector)) {
+      dot.style.width = '20px'; dot.style.height = '20px';
+      dot.style.background = 'transparent';
+      dot.style.border = '1.5px solid rgba(255,107,0,0.7)';
+      dot.style.boxShadow = 'none';
+    }
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest(interactiveSelector)) {
+      dot.style.width = '8px'; dot.style.height = '8px';
+      dot.style.background = 'var(--orange)';
+      dot.style.border = 'none';
+      dot.style.boxShadow = '0 0 14px var(--orange)';
+    }
+  });
+
+  function animGlow() {
+    // Lerp glow position
+    gx += (mx - gx) * 0.08;
+    gy += (my - gy) * 0.08;
+    glow.style.left = gx + 'px';
+    glow.style.top  = gy + 'px';
+    requestAnimationFrame(animGlow);
+  }
+  animGlow();
+})();
+
+// ===== AMBIENT PARTICLE SYSTEM =====
+(function(){
+  const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+  // Skip entirely on touch devices — significant battery/performance win
+  if (window.matchMedia('(pointer:coarse)').matches) {
+    canvas.style.display = 'none'; return;
+  }
+  // Also skip on low-power preference
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    canvas.style.display = 'none'; return;
+  }
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  let _rafId, _resizeTimer;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  // Debounce resize to avoid thrashing
+  window.addEventListener('resize', () => {
+    clearTimeout(_resizeTimer);
+    _resizeTimer = setTimeout(resize, 150);
+  }, {passive:true});
+
+  const COUNT = window.innerWidth < 768 ? 22 : 40;
+
+  function createParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.5 + 0.3,
+      vx: (Math.random() - .5) * 0.18,
+      vy: -Math.random() * 0.25 - 0.05,
+      alpha: Math.random() * 0.4 + 0.05,
+      life: Math.random(),
+      decay: Math.random() * 0.002 + 0.0005,
+    };
+  }
+
+  for (let i = 0; i < COUNT; i++) {
+    const p = createParticle();
+    p.life = Math.random(); // stagger start
+    particles.push(p);
+  }
+
+  // Use requestAnimationFrame at ~30fps for battery
+  let lastTime = 0;
+  function draw(ts) {
+    _rafId = requestAnimationFrame(draw);
+    if (ts - lastTime < 33) return;
+    lastTime = ts;
+
+    ctx.clearRect(0, 0, W, H);
+    for (let p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      p.life -= p.decay;
+      if (p.life <= 0 || p.y < -10 || p.x < -10 || p.x > W + 10) {
+        Object.assign(p, createParticle());
+        p.y = H + 5; // respawn from bottom
+        p.life = Math.random() * 0.4 + 0.6;
+      }
+      const a = p.alpha * Math.min(p.life * 3, 1);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,${100 + Math.floor(p.r * 40)},0,${a})`;
+      ctx.fill();
+    }
+  }
+  _rafId = requestAnimationFrame(draw);
+
+  // Pause when tab hidden — saves battery / CPU
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { cancelAnimationFrame(_rafId); }
+    else { lastTime = 0; _rafId = requestAnimationFrame(draw); }
+  });
+})();
+
+// ===== PARALLAX ORBS =====
+(function(){
+  const orbs = document.querySelectorAll('[data-parallax]');
+  if (!orbs.length) return;
+  if (window.matchMedia('(pointer:coarse)').matches) return; // skip on mobile
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  let scrollY = window.scrollY;
+  let _rafId;
+
+  window.addEventListener('scroll', () => {
+    scrollY = window.scrollY;
+  }, {passive:true});
+
+  function tickParallax() {
+    orbs.forEach(orb => {
+      const speed = parseFloat(orb.dataset.parallax) || 0.04;
+      const ty = scrollY * speed;
+      orb.style.transform = `translateY(${ty}px) translateZ(0)`;
+    });
+    _rafId = requestAnimationFrame(tickParallax);
+  }
+  _rafId = requestAnimationFrame(tickParallax);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(_rafId);
+    else _rafId = requestAnimationFrame(tickParallax);
+  });
+})();
+
+// ===== 3D HOVER CARDS (desktop only) =====
+(function(){
+  if (window.matchMedia('(pointer:coarse)').matches) return;
+
+  function apply3D(card) {
+    if (card._3d) return;
+    card._3d = true;
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width  / 2;
+      const cy = rect.top  + rect.height / 2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      const rx = -dy * 10;
+      const ry =  dx * 10;
+      card.style.transition = 'transform .08s ease, box-shadow .4s';
+      card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s';
+      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
+    });
+    // Accessible: reset on focus/blur for keyboard users
+    card.addEventListener('focus', () => {
+      card.style.transition = 'transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s';
+      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
+    });
+  }
+
+  document.querySelectorAll('.card-3d').forEach(apply3D);
+
+  // Watch for dynamically added cards (e.g. slider)
+  const mo = new MutationObserver(() => {
+    document.querySelectorAll('.card-3d').forEach(apply3D);
+  });
+  mo.observe(document.body, {childList:true, subtree:true});
+})();
+
+// ===== SCROLL REVEAL PRO =====
+const _revealClasses = ['.reveal','.reveal-left','.reveal-right','.reveal-scale','.reveal-stagger','.section-line'];
+const _revObs = new IntersectionObserver(entries => {
+  entries.forEach((en, i) => {
+    if (en.isIntersecting) {
+      const delay = en.target.dataset.delay ? parseInt(en.target.dataset.delay) : i * 50;
+      setTimeout(() => en.target.classList.add('vis'), delay);
+      _revObs.unobserve(en.target);
+    }
+  });
+}, {threshold:0.06, rootMargin:'0px 0px -20px 0px'});
+
+document.querySelectorAll(_revealClasses.join(',')).forEach(el => _revObs.observe(el));
+
+// ===== SINGLE RAF LOCK MANAGER =====
+const RAF = (() => {
+  const _pending = new Map();
+  return {
+    schedule(key, fn) {
+      if (_pending.has(key)) return;
+      _pending.set(key, requestAnimationFrame(() => {
+        _pending.delete(key);
+        fn();
+      }));
+    },
+    cancel(key) {
+      if (_pending.has(key)) { cancelAnimationFrame(_pending.get(key)); _pending.delete(key); }
+    }
+  };
+})();
+
+// ===== SCROLL HANDLERS (consolidated) =====
+let lastY = 0;
+let menuOpen = false; // track menu state for scroll hide fix
+const navEl = document.getElementById('mainNav');
+const bttEl = document.getElementById('btt');
+const progEl = document.getElementById('scrollProg');
+
+function onScroll() {
+  const y = window.scrollY;
+  const maxScroll = document.body.scrollHeight - window.innerHeight;
+  if (maxScroll > 0) progEl.style.width = (y / maxScroll * 100) + '%';
+  bttEl.classList.toggle('vis', y > 500);
+  navEl.classList.toggle('scrolled', y > 30);
+  // Ultra smooth nav hide — only trigger after meaningful scroll
+  if (!menuOpen) {
+    const delta = y - lastY;
+    // Hide: scroll down > 6px, past 100px from top
+    if (delta > 6 && y > 100) navEl.classList.add('hide');
+    // Reveal: scroll up any amount OR near top
+    else if (delta < -2 || y <= 60) navEl.classList.remove('hide');
+  }
+  lastY = y;
+}
+
+window.addEventListener('scroll', () => {
+  RAF.schedule('scroll', onScroll);
+}, {passive:true});
+
+// ===== SMOOTH SCROLL =====
+function sgo(e, id) {
+  if(e) e.preventDefault();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth'});
+}
+
+// ===== REVEAL — handled by Scroll Reveal Pro above =====
+// Legacy: re-observe any elements added dynamically
+function reObserveReveal() {
+  document.querySelectorAll('.reveal:not(.vis),.reveal-left:not(.vis),.reveal-right:not(.vis),.reveal-scale:not(.vis),.reveal-stagger:not(.vis)').forEach(el => _revObs.observe(el));
+}
+
+// ===== COUNT UP =====
+const cntObs = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    const el = en.target;
+    const target = +el.dataset.target;
+    const suffix = el.dataset.suffix || '';
+    const duration = 2800;
+    const start = performance.now();
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      // easeOutQuart
+      const eased = 1 - Math.pow(1 - progress, 4);
+      el.textContent = Math.round(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    cntObs.unobserve(el);
+  });
+}, {threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el => cntObs.observe(el));
+
+// ===== FAQ =====
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.closest('.faq-item');
+    const ans  = item.querySelector('.faq-a');
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-a').classList.remove('open'); });
+    if (!open) { item.classList.add('open'); ans.classList.add('open'); }
+  });
+});
+
+// ===== SLIDER DOTS =====
+function initSlider(trackId, dotsId) {
+  const track = document.getElementById(trackId);
+  const dotsEl = document.getElementById(dotsId);
+  if (!track || !dotsEl) return;
+  const cards  = track.querySelectorAll('.slide-card');
+  if (!cards.length) return;
+  dotsEl.innerHTML = '';
+  cards.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.onclick = () => {
+      cards[i].scrollIntoView({behavior:'smooth', block:'nearest', inline:'start'});
+    };
+    dotsEl.appendChild(d);
+  });
+  const dots = dotsEl.querySelectorAll('.dot');
+
+  // FIX: parse gap properly (Safari returns "normal" for gap)
+  function getCw() {
+    if (!cards[0]) return 1;
+    const computedGap = getComputedStyle(track).gap;
+    const gapPx = (computedGap && computedGap !== 'normal')
+      ? parseFloat(computedGap)
+      : 12; // fallback to our declared 12px gap
+    return cards[0].offsetWidth + gapPx;
+  }
+
+  let _scrollKey;
+  track.addEventListener('scroll', () => {
+    const key = 'slider-' + trackId;
+    RAF.schedule(key, () => {
+      const cw = getCw();
+      if (cw <= 1) return;
+      const idx = Math.min(Math.round(track.scrollLeft / cw), cards.length - 1);
+      dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+    });
+  }, {passive:true});
+}
+initSlider('sliderKegiatan','dotsKegiatan');
+initSlider('sliderPrestasi','dotsPrestasi');
+initSlider('sliderStruktur','dotsStruktur');
+
+// ===== VIDEO AUTOPLAY FIX (mobile / intersection) =====
+const galeriVid = document.getElementById('galeriVideo');
+if (galeriVid) {
+  galeriVid.muted = true;
+  galeriVid.setAttribute('playsinline', '');
+  galeriVid.setAttribute('webkit-playsinline', '');
+  const vidObs = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        // Only play if not on slow connection
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        const isSlow = conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g');
+        if (!isSlow) galeriVid.play().catch(()=>{});
+      } else {
+        galeriVid.pause();
+      }
+    });
+  }, {threshold: 0.25});
+  vidObs.observe(galeriVid);
+}
+
+// ===== HAMBURGER =====
+function toggleMenu() {
+  const on = document.getElementById('nmenu').classList.contains('on');
+  on ? closeMenu() : openMenu();
+}
+function openMenu() {
+  menuOpen = true;
+  lastY = window.scrollY; // reset so nav doesn't immediately hide
+  document.getElementById('hbgBtn').classList.add('on');
+  document.getElementById('hbgBtn').setAttribute('aria-expanded', 'true');
+  document.getElementById('hbgBtn').setAttribute('aria-label', 'Tutup menu navigasi');
+  const nmenu = document.getElementById('nmenu');
+  nmenu.classList.add('on');
+  nmenu.removeAttribute('aria-hidden');
+  document.getElementById('novl').classList.add('on');
+  navEl.classList.remove('hide');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+  menuOpen = false;
+  document.getElementById('hbgBtn').classList.remove('on');
+  document.getElementById('hbgBtn').setAttribute('aria-expanded', 'false');
+  document.getElementById('hbgBtn').setAttribute('aria-label', 'Buka menu navigasi');
+  const nmenu = document.getElementById('nmenu');
+  nmenu.classList.remove('on');
+  nmenu.setAttribute('aria-hidden', 'true');
+  document.getElementById('novl').classList.remove('on');
+  // Only restore scroll if no lightbox is open
+  if (!document.getElementById('lb').classList.contains('on') &&
+      !document.getElementById('vlb').classList.contains('on')) {
+    document.body.style.overflow = '';
+  }
+}
+function navGo(e, id) {
+  if(e) e.preventDefault();
+  closeMenu();
+  setTimeout(() => sgo(null, id), 300);
+}
+
+// ===== VIDEO LIGHTBOX =====
+const vlbEl  = document.getElementById('vlb');
+const vlbVid = document.getElementById('vlbVideo');
+
+function openVideoLB() {
+  vlbEl.classList.add('on');
+  document.body.style.overflow = 'hidden';
+  vlbVid.currentTime = 0;
+  vlbVid.muted = true;
+  vlbVid.play().catch(() => {});
+}
+
+function closeVideoLB() {
+  vlbEl.classList.remove('on');
+  if (!menuOpen && !document.getElementById('lb').classList.contains('on')) {
+    document.body.style.overflow = '';
+  }
+  vlbVid.pause();
+}
+
+document.getElementById('vlb-backdrop').addEventListener('click', closeVideoLB);
+document.getElementById('vlbCloseBtn').addEventListener('click', closeVideoLB);
+
+// sheet drag-down to close
+const _vlbSheet = document.getElementById('vlbSheet');
+let _vsy0 = 0, _vsdrag = false, _vsdy = 0;
+_vlbSheet.addEventListener('touchstart', e => {
+  _vsy0 = e.touches[0].clientY; _vsdrag = false; _vsdy = 0;
+}, {passive:true});
+_vlbSheet.addEventListener('touchmove', e => {
+  const dy = e.touches[0].clientY - _vsy0;
+  if (!_vsdrag && dy > 8) _vsdrag = true;
+  if (_vsdrag && dy > 0) {
+    _vsdy = dy;
+    _vlbSheet.style.transition = 'none';
+    _vlbSheet.style.transform = `translateY(${dy}px)`;
+  }
+}, {passive:true});
+_vlbSheet.addEventListener('touchend', () => {
+  if (!_vsdrag) return;
+  _vsdrag = false;
+  _vlbSheet.style.transition = '';
+  if (_vsdy > 100) { /* lower threshold = easier to dismiss */
+    closeVideoLB();
+    setTimeout(() => { _vlbSheet.style.transform = ''; }, 420);
+  } else {
+    _vlbSheet.style.transform = 'translateY(0)';
+  }
+  _vsdy = 0;
+}, {passive:true});
+
+// ===== UNIFIED KEYBOARD HANDLER =====
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('vlb').classList.contains('on')) { closeVideoLB(); return; }
+    if (document.getElementById('lb').classList.contains('on')) { closeLB(); return; }
+    if (document.getElementById('nmenu').classList.contains('on')) { closeMenu(); return; }
+  }
+  if (!document.getElementById('lb').classList.contains('on')) return;
+  if (e.key === 'ArrowRight') lbStep(1);
+  else if (e.key === 'ArrowLeft') lbStep(-1);
+});
+
+// ===== CTA STARS CANVAS =====
+(function(){
+  const canvas = document.getElementById('ctaStarsCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+  let _rafId;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = canvas.width = rect.width || window.innerWidth;
+    H = canvas.height = rect.height || 400;
+  }
+
+  function createStar() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.2 + 0.2,
+      alpha: Math.random() * 0.5 + 0.1,
+      twinkle: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.02 + 0.008
+    };
+  }
+
+  function init() {
+    resize();
+    stars = Array.from({length: 60}, createStar);
+  }
+
+  let lastTs = 0;
+  function draw(ts) {
+    _rafId = requestAnimationFrame(draw);
+    if (ts - lastTs < 50) return; // ~20fps
+    lastTs = ts;
+    ctx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      s.twinkle += s.speed;
+      const a = s.alpha * (0.5 + 0.5 * Math.sin(s.twinkle));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,200,150,${a})`;
+      ctx.fill();
+    }
+  }
+
+  // Only run when CTA section is visible
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      if (!stars.length) init();
+      _rafId = requestAnimationFrame(draw);
+    } else {
+      cancelAnimationFrame(_rafId);
+    }
+  }, {threshold: 0.1});
+  obs.observe(canvas.parentElement);
+
+  window.addEventListener('resize', () => {
+    clearTimeout(canvas._rt);
+    canvas._rt = setTimeout(resize, 150);
+  }, {passive:true});
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(_rafId);
+  });
+})();
+
+// ===== INIT JURNAL =====
+renderJurnal();
+// Re-observe after render
+setTimeout(() => reObserveReveal(), 100);
+</script>
+</body>
+</html>
